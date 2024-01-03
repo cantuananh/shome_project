@@ -12,7 +12,8 @@ public class UserRestController {
     private UserService userService;
 
     @RequestMapping("/shopme/admin/users/check-email")
-    public String checkDuplicateEmail(@Param("email") String email) {
-        return userService.isEmailUnique(email) ? "Ok" : "Duplicated";
+    public String checkDuplicateEmail(@Param("id") Integer id, @Param("email") String email) {
+        System.out.println(id);
+        return userService.isEmailUnique(id, email) ? "Ok" : "Duplicated";
     }
 }
