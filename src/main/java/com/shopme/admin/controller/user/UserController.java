@@ -25,7 +25,7 @@ public class UserController {
     public String getAllUsers(Model model) {
         model.addAttribute("listUsers", userService.listAll());
 
-        return "/admin/user/users";
+        return "admin/user/users";
     }
 
     @RequestMapping("/new")
@@ -37,7 +37,7 @@ public class UserController {
         model.addAttribute("listRoles", listRoles);
         model.addAttribute("pageTitle", "Create new user");
 
-        return "/admin/user/user_form";
+        return "admin/user/user_form";
     }
 
     @PostMapping("/save")
@@ -63,24 +63,9 @@ public class UserController {
             model.addAttribute("listRoles", listRoles);
             model.addAttribute("pageTitle", "Edit user ID: " + user.getId());
 
-            return "/admin/user/user_form";
+            return "admin/user/user_form";
         } catch (UserNotFoundException exception) {
             redirectAttributes.addFlashAttribute("message", exception.getMessage());
-            return "redirect:/shopme/admin/users";
-        }
-    }
-
-    @PostMapping("/delete/{id}")
-    public String deleteUser(@PathVariable(name = "id") Integer id,
-                             Model model,
-                             RedirectAttributes redirectAttributes) {
-        try {
-            userService.delete(id);
-            redirectAttributes.addFlashAttribute("message", "Delete successfully user ID: " + id);
-
-            return "redirect:/shopme/admin/users";
-        } catch (UserNotFoundException e) {
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "redirect:/shopme/admin/users";
         }
     }
