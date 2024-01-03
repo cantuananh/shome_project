@@ -25,7 +25,7 @@ public class UserController {
     public String getAllUsers(Model model) {
         model.addAttribute("listUsers", userService.listAll());
 
-        return "/admin/user/users";
+        return "admin/user/users";
     }
 
     @RequestMapping("/new")
@@ -37,7 +37,7 @@ public class UserController {
         model.addAttribute("listRoles", listRoles);
         model.addAttribute("pageTitle", "Create new user");
 
-        return "/admin/user/user_form";
+        return "admin/user/user_form";
     }
 
     @PostMapping("/save")
@@ -63,11 +63,10 @@ public class UserController {
             model.addAttribute("listRoles", listRoles);
             model.addAttribute("pageTitle", "Edit user ID: " + user.getId());
 
-            return "/admin/user/user_form";
+            return "admin/user/user_form";
         } catch (UserNotFoundException exception) {
             redirectAttributes.addFlashAttribute("message", exception.getMessage());
             return "redirect:/shopme/admin/users";
         }
     }
-
 }
