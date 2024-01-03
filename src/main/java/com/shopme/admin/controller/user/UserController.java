@@ -70,4 +70,18 @@ public class UserController {
         }
     }
 
+    @PostMapping("/delete/{id}")
+    public String deleteUser(@PathVariable(name = "id") Integer id,
+                             Model model,
+                             RedirectAttributes redirectAttributes) {
+        try {
+            userService.delete(id);
+            redirectAttributes.addFlashAttribute("message", "Delete successfully user ID: " + id);
+
+            return "redirect:/shopme/admin/users";
+        } catch (UserNotFoundException e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return "redirect:/shopme/admin/users";
+        }
+    }
 }

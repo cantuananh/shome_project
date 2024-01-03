@@ -59,23 +59,18 @@ public class UserService {
     public boolean isEmailUnique(Integer id, String email) {
         User userByEmail = userRepository.getUserByEmail(email);
 
-        // Nếu không có người dùng nào có cùng email, thì email là duy nhất
         if (userByEmail == null) {
             return true;
         }
 
-        // Nếu đang tạo mới, và đã tồn tại người dùng với email này, thì email không duy nhất
         if (id == null) {
             return false;
         }
 
-        // Nếu đang cập nhật và email đã được sử dụng bởi người dùng khác, thì email không duy nhất
         if (!userByEmail.getId().equals(id)) {
             return false;
         }
 
-        // Trường hợp còn lại, tức là đang cập nhật và email không thay đổi,
-        // email chưa được sử dụng, hoặc đang tạo mới và email chưa được sử dụng, thì email là duy nhất
         return true;
     }
 
@@ -87,5 +82,17 @@ public class UserService {
         } catch (NoSuchElementException ex) {
             throw new UserNotFoundException("Could not found user ID :" + id);
         }
+    }
+
+    public void delete(Integer id) throws UserNotFoundException {
+        Long countById = userRepository.countById(id);
+
+        if (countById == null || countById ==0) {
+            throw new UserNotFoundException("Could not found user ID: " + id);
+        }
+
+        userRepository.deleteById(id);
+
+
     }
 }

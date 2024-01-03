@@ -102,8 +102,11 @@
                 <td th:if="${user.enabled == true}"><i class="fas fa-check-circle fa-2x icon-green"></i></td>
                 <td th:if="${user.enabled == false}"><i class="fas fa-check-circle fa-2x icon-dark"></i></td>
                 <td>
-                    <button><a class="fas fa-edit fa-2x icon-green" title="Update this user" th:href="@{'/shopme/admin/users/edit/' + ${user.id}}"></a></button>
-                    <button><i class="fas fa-trash fa-2x icon-dark"></i></button>
+                    <button><a class="fas fa-edit fa-2x icon-green" title="Update this user"
+                               th:href="@{'/shopme/admin/users/edit/' + ${user.id}}"></a></button>
+                        <form th:action="@{'/shopme/admin/users/delete/' + ${user.id}}" method="post">
+                            <button type="submit"><i class="fas fa-trash fa-2x icon-dark"></i></button>
+                        </form>
                 </td>
             </tr>
             </tbody>
