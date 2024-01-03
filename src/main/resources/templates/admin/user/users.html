@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <title>Home page</title>
 
+   <link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
-    <!--    <link type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
+        <link type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
@@ -69,8 +73,8 @@
     <button class="btn btn-success" style="margin-bottom: 1rem;">
         <a style="color: white;text-decoration: none;" th:href="@{/shopme/admin/users/new}">Create user</a>
     </button>
-    <div th:if="${message}">
-        <p class="alert alert-success">[[${message}]]</p>
+    <div th:if="${message}" class="message">
+        <p class="alert alert-success" id="successMessage">[[${message}]]</p>
     </div>
     <div>
         <table class="table table-responsive-xl table-striped table-bordered">
@@ -88,16 +92,18 @@
             </thead>
             <tbody class="text-center">
             <tr th:each="user, state: ${listUsers}">
+                <!--                <td th:text="${state.count}"></td>-->
                 <td th:text="${user.id}"></td>
-                <td></td>
+                <td><i class="fa fa-portrait fa-3x icon-dark"></i></td>
                 <td>[[${user.email}]]</td>
                 <td>[[${user.firstName}]]</td>
                 <td>[[${user.lastName}]]</td>
                 <td>[[${user.roles}]]</td>
-                <td>[[${user.enabled}]]</td>
+                <td th:if="${user.enabled == true}"><i class="fas fa-check-circle fa-2x icon-green"></i></td>
+                <td th:if="${user.enabled == false}"><i class="fas fa-check-circle fa-2x icon-dark"></i></td>
                 <td>
-                    <button>edit</button>
-                    <button>delete</button>
+                    <button><i class="fas fa-edit fa-2x icon-green"></i></button>
+                    <button><i class="fas fa-trash fa-2x icon-dark"></i></button>
                 </td>
             </tr>
             </tbody>
@@ -108,4 +114,11 @@
     <p>Shopme Control Panel - Copyright &copy; Shopme</p>
 </div>
 </body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#successMessage').fadeOut();
+        }, 3000);
+    })
+</script>
 </html>

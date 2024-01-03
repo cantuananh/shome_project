@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
-    @Query("SELECT u FROM User u WHERE u.email = :email")
+    @Query("SELECT u from User u where u.email = :email")
     public User getUserByEmail(@Param("email") String email);
 }
