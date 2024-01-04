@@ -179,7 +179,14 @@
         })
 
         $('#fileImage').change( function (){
-            showImageThumbnail(this);
+            let fileSize = this.files[0].size;
+            if (fileSize > 1048576) {
+                this.setCustomValidity("You must choose an image less than 1Mb.")
+                this.reportValidity();
+            } else {
+                this.setCustomValidity("")
+                showImageThumbnail(this);
+            }
         })
     });
 
