@@ -36,7 +36,7 @@ public class WebSecurityConfig {
     @Bean
     SecurityFilterChain configureHttpSecurity(HttpSecurity http) throws Exception {
         http.authorizeRequests(authorize -> authorize
-                        // Cho phép tất cả các request không cần xác thực
+//                         Cho phép tất cả các request không cần xác thực
                         .requestMatchers("/**").permitAll()
                 );
 //        http.authenticationProvider(authenticationProvider());
