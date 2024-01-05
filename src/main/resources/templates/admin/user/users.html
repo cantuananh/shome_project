@@ -122,6 +122,27 @@
     </div>
 </div>
 
+<div class="text-center m-1" th:if="${totalItems > 0}">
+    <span>Showing user # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]</span>
+</div>
+
+<div class="text-center m-1" th:unless="${totalItems > 0}">
+    <span>No user found</span>
+</div>
+<div>
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li th:class="${currentPage == 1 ? 'page-item disabled' : 'page-item'}" ><a class="page-link" th:href="@{/shopme/admin/users/page/1}">First</a></li>
+            <li th:class="${currentPage == 1 ? 'page-item disabled' : 'page-item'}"><a class="page-link" th:href="@{'/shopme/admin/users/page/' + ${currentPage - 1}}">Previous</a></li>
+            <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}" th:each="i : ${#numbers.sequence(1, totalPages)}">
+                <a class="page-link" th:href="@{'/shopme/admin/users/page/' + ${i}}">[[${i}]]</a>
+            </li>
+            <li th:class="${currentPage == totalPages ? 'page-item disabled' : 'page-item'}"><a class="page-link" th:href="@{'/shopme/admin/users/page/' + ${currentPage + 1}}">Next</a></li>
+            <li th:class="${currentPage == totalPages ? 'page-item disabled' : 'page-item'}"><a class="page-link" th:href="@{'/shopme/admin/users/page/' + ${totalPages}}">Last</a></li>
+        </ul>
+    </nav>
+</div>
+
 <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
