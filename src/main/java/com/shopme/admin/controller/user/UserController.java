@@ -6,6 +6,7 @@ import com.shopme.admin.model.User;
 import com.shopme.admin.service.UserNotFoundException;
 import com.shopme.admin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -24,7 +25,22 @@ public class UserController {
 
     @RequestMapping()
     public String getAllUsers(Model model) {
-        model.addAttribute("listUsers", userService.listAll());
+        return listByPage(1, model);
+//        model.addAttribute("listUsers", userService.listAll());
+//
+//        return "admin/user/users";
+    }
+
+    @GetMapping("/page/{pageNum}")
+    public String listByPage(@PathVariable(name = "pageNum") int pageNum, Model model) {
+        Page<User> page = userService.listByPage(pageNum);
+        List<User> listUsers = page.getContent();
+
+        System.out.println("Pagenum = " + pageNum);
+        System.out.println("Total element = " + page.getTotalElements());
+        System.out.println("Total page = " + page.getTotalPages());
+
+        model.addAttribute("listUsers", listUsers);
 
         return "admin/user/users";
     }
