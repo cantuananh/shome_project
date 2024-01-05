@@ -161,4 +161,13 @@ public class User {
     public void removeRole(Role role) {
         this.roles.remove(role);
     }
+
+    @Transient
+    public String getPhotoImagePath() {
+        if (id == null || photos == null) {
+            return "/images/default-user.png";
+
+        }
+        return "/user-photos/" + this.id +"/" + this.photos;
+    }
 }

@@ -111,6 +111,6 @@ public class UserRepositoryTest {
     public void testDisabledUser() {
         Integer id = 1;
 
-        userRepository.updateEnabledStatus(id, false);
+        userRepository.updateUserEnabledStatus(id, false);
     }
 }
