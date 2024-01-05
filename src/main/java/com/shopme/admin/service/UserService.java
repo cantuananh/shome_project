@@ -5,6 +5,9 @@ import com.shopme.admin.model.User;
 import com.shopme.admin.repository.RoleRepository;
 import com.shopme.admin.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ import java.util.NoSuchElementException;
 
 @Service
 public class UserService {
+    public static final int PER_PAGE_NUMBER = 4;
     @Autowired
     private UserRepository userRepository;
 
@@ -25,6 +29,13 @@ public class UserService {
 
     public List<User> listAll() {
         return (List<User>) userRepository.findAll();
+    }
+
+    public Page<User> listByPage(int pageNum){
+        Pageable pageable = PageRequest.of(pageNum - 1, PER_PAGE_NUMBER);
+
+        return userRepository.findAll(pageable);
+
     }
 
     public void createUser(User user) {
