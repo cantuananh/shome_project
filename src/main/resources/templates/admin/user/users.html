@@ -122,6 +122,14 @@
     </div>
 </div>
 
+<div class="text-center m-1" th:if="${totalItems > 0}">
+    <span>Showing user # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]</span>
+</div>
+
+<div class="text-center m-1" th:unless="${totalItems > 0}">
+    <span>No user found</span>
+</div>
+
 <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">

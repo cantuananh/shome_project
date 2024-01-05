@@ -36,10 +36,15 @@ public class UserController {
         Page<User> page = userService.listByPage(pageNum);
         List<User> listUsers = page.getContent();
 
-        System.out.println("Pagenum = " + pageNum);
-        System.out.println("Total element = " + page.getTotalElements());
-        System.out.println("Total page = " + page.getTotalPages());
+        long startCount = (pageNum - 1) * userService.USER_PER_PAGE + 1;
+        long endCount = startCount + userService.USER_PER_PAGE - 1;
+        if (endCount > page.getTotalElements()) {
+            endCount = page.getTotalElements();
+        }
 
+        model.addAttribute("startCount", startCount);
+        model.addAttribute("endCount", endCount);
+        model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("listUsers", listUsers);
 
         return "admin/user/users";

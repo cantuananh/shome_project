@@ -17,7 +17,7 @@ import java.util.NoSuchElementException;
 
 @Service
 public class UserService {
-    public static final int PER_PAGE_NUMBER = 4;
+    public static final int USER_PER_PAGE = 4;
     @Autowired
     private UserRepository userRepository;
 
@@ -32,7 +32,7 @@ public class UserService {
     }
 
     public Page<User> listByPage(int pageNum){
-        Pageable pageable = PageRequest.of(pageNum - 1, PER_PAGE_NUMBER);
+        Pageable pageable = PageRequest.of(pageNum - 1, USER_PER_PAGE);
 
         return userRepository.findAll(pageable);
 
