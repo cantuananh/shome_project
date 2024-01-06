@@ -75,6 +75,22 @@
     <div th:if="${message}" class="message text-center">
         <p class="alert alert-success" id="successMessage">[[${message}]]</p>
     </div>
+
+    <div class="mb-3">
+        <form th:action="@{/shopme/admin/users/page/1}" class="form-inline">
+            <div class="mr-2 d-flex align-items-center">
+                <input type="hidden" name="sortField" th:value="${sortField}">
+                <input type="hidden" name="sortDir" th:value="${sortDir}">
+                <label for="keyword" class="mr-2">Filter:</label>
+                <input type="search" name="keyword" id="keyword" class="form-control" style="max-width: 300px; margin-right: 5px;" required>
+                <input type="submit" value="Search" class="btn btn-primary" style="margin-right: 5px;">
+                <input type="reset" value="Clear" class="btn btn-secondary ml-2" style="margin-right: 5px;">
+            </div>
+
+        </form>
+    </div>
+
+
     <div>
         <table class="table table-responsive-xl table-striped table-bordered">
             <thead class="thead-dark">
@@ -170,7 +186,7 @@
 <div class="text-center m-1" th:unless="${totalItems > 0}">
     <span>No user found</span>
 </div>
-<div>
+<div th:if="${totalItems > 0}">
     <nav>
         <ul class="pagination justify-content-center">
             <li th:class="${currentPage == 1 ? 'page-item disabled' : 'page-item'}"><a class="page-link"
