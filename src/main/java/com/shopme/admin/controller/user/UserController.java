@@ -52,6 +52,8 @@ public class UserController {
         model.addAttribute("endCount", endCount);
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("listUsers", listUsers);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
 
         return "admin/user/users";
     }

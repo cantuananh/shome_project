@@ -82,7 +82,10 @@
                 <th>User ID</th>
                 <th>Photos</th>
                 <th>E-mail</th>
-                <th>First name</th>
+                <th>
+                    <a>First name</a>
+                    <span th:if="${sortField == 'firstName'}" th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+                </th>
                 <th>Last name</th>
                 <th>Roles</th>
                 <th>Enabled</th>
