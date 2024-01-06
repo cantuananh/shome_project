@@ -97,10 +97,11 @@
             <tr class="text-center">
                 <th>
                     <a th:if="${sortField != 'id'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${sortDir}}">User
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${sortDir}
+                       + ${keyword != null ? '&keyword=' + keyword : ''}}">User
                         ID</a>
                     <a th:if="${sortField == 'id'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${revertSortDir}}">User
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${revertSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">User
                         ID</a>
                     <span th:if="${sortField == 'id'}"
                           th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
@@ -108,28 +109,28 @@
                 <th>Photos</th>
                 <th>
                     <a th:if="${sortField != 'email'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${sortDir}}">E-mail</a>
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">E-mail</a>
                     <a th:if="${sortField == 'email'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${revertSortDir}}">E-mail</a>
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${revertSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">E-mail</a>
                     <span th:if="${sortField == 'email'}"
                           th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
                 </th>
                 <th>
                     <a th:if="${sortField != 'firstName'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${sortDir}}">First
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">First
                         name</a>
                     <a th:if="${sortField == 'firstName'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${revertSortDir}}">First
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${revertSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">First
                         name</a>
                     <span th:if="${sortField == 'firstName'}"
                           th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
                 </th>
                 <th>
                     <a th:if="${sortField != 'lastName'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${sortDir}}">Last
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Last
                         name</a>
                     <a th:if="${sortField == 'lastName'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${revertSortDir}}">Last
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${revertSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Last
                         name</a>
                     <span th:if="${sortField == 'lastName'}"
                           th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
@@ -137,9 +138,9 @@
                 <th>Roles</th>
                 <th>
                     <a th:if="${sortField != 'enabled'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=enabled&sortDir=' + ${sortDir}}">Enabled</a>
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=enabled&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Enabled</a>
                     <a th:if="${sortField == 'enabled'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=enabled&sortDir=' + ${revertSortDir}}">Enabled</a>
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=enabled&sortDir=' + ${revertSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Enabled</a>
                     <span th:if="${sortField == 'enabled'}"
                           th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
                 </th>
