@@ -92,10 +92,10 @@ public class UserController {
         }
             redirectAttributes.addFlashAttribute("message", "The user has been saved successfully");
 
-        return getRedirectURLtoAffterEffectedUser(user);
+        return getRedirectURLtoAfterEffectedUser(user);
     }
 
-    private static String getRedirectURLtoAffterEffectedUser(User user) {
+    private static String getRedirectURLtoAfterEffectedUser(User user) {
         String firstPartOfEmail = user.getEmail().split("@")[0];
         return "redirect:/shopme/admin/users/page/1?sortField=id&sortDir=asc&keyword=" + firstPartOfEmail;
     }
