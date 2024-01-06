@@ -95,55 +95,13 @@
         <table class="table table-responsive-xl table-striped table-bordered">
             <thead class="thead-dark">
             <tr class="text-center">
-                <th>
-                    <a th:if="${sortField != 'id'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${sortDir}
-                       + ${keyword != null ? '&keyword=' + keyword : ''}}">User
-                        ID</a>
-                    <a th:if="${sortField == 'id'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${revertSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">User
-                        ID</a>
-                    <span th:if="${sortField == 'id'}"
-                          th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-                </th>
+                <th th:replace="~{/admin/fragments :: column_link('id', 'User ID')}"></th>
                 <th>Photos</th>
-                <th>
-                    <a th:if="${sortField != 'email'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">E-mail</a>
-                    <a th:if="${sortField == 'email'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${revertSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">E-mail</a>
-                    <span th:if="${sortField == 'email'}"
-                          th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-                </th>
-                <th>
-                    <a th:if="${sortField != 'firstName'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">First
-                        name</a>
-                    <a th:if="${sortField == 'firstName'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${revertSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">First
-                        name</a>
-                    <span th:if="${sortField == 'firstName'}"
-                          th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-                </th>
-                <th>
-                    <a th:if="${sortField != 'lastName'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Last
-                        name</a>
-                    <a th:if="${sortField == 'lastName'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${revertSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Last
-                        name</a>
-                    <span th:if="${sortField == 'lastName'}"
-                          th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-                </th>
+                <th th:replace="~{/admin/fragments :: column_link('email', 'E-mail')}"></th>
+                <th th:replace="~{/admin/fragments :: column_link('firstName', 'First name')}"></th>
+                <th th:replace="~{/admin/fragments :: column_link('lastName', 'Last name')}"></th>
+                <th th:replace="~{/admin/fragments :: column_link('enabled', 'Enabled')}"></th>
                 <th>Roles</th>
-                <th>
-                    <a th:if="${sortField != 'enabled'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=enabled&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Enabled</a>
-                    <a th:if="${sortField == 'enabled'}"
-                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=enabled&sortDir=' + ${revertSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Enabled</a>
-                    <span th:if="${sortField == 'enabled'}"
-                          th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-                </th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -190,21 +148,21 @@
 <div th:if="${totalItems > 0}">
     <nav>
         <ul class="pagination justify-content-center">
-            <li th:class="${currentPage == 1 ? 'page-item disabled' : 'page-item'}"><a class="page-link"
-                                                                                       th:href="@{'/shopme/admin/users/page/1?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">First</a>
+            <li th:class="${currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                <a th:replace="~{admin/fragments :: page_link(1, 'First')}" ></a>
             </li>
-            <li th:class="${currentPage == 1 ? 'page-item disabled' : 'page-item'}"><a class="page-link"
-                                                                                       th:href="@{'/shopme/admin/users/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+            <li th:class="${currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                <a th:replace="~{admin/fragments :: page_link(${currentPage - 1}, 'Previous')}" ></a>
             </li>
             <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
                 th:each="i : ${#numbers.sequence(1, totalPages)}">
-                <a class="page-link" th:href="@{'/shopme/admin/users/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                <a th:replace="~{admin/fragments :: page_link(${i}, ${i})}" ></a>
             </li>
-            <li th:class="${currentPage == totalPages ? 'page-item disabled' : 'page-item'}"><a class="page-link"
-                                                                                                th:href="@{'/shopme/admin/users/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+            <li th:class="${currentPage == totalPages ? 'page-item disabled' : 'page-item'}">
+                <a th:replace="~{admin/fragments :: page_link(${currentPage + 1}, 'Next')}" ></a>
             </li>
-            <li th:class="${currentPage == totalPages ? 'page-item disabled' : 'page-item'}"><a class="page-link"
-                                                                                                th:href="@{'/shopme/admin/users/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+            <li th:class="${currentPage == totalPages ? 'page-item disabled' : 'page-item'}">
+                <a th:replace="~{admin/fragments :: page_link(${totalPages}, 'Last')}" ></a>
             </li>
         </ul>
     </nav>
