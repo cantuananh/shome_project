@@ -68,10 +68,12 @@
     </nav>
 </div>
 <div>
-    <h2>User manager</h2>
-    <button class="btn btn-success" style="margin-bottom: 1rem;">
-        <a style="color: white;text-decoration: none;" th:href="@{/shopme/admin/users/new}">Create user</a>
-    </button>
+    <div>
+        <h2>User manager</h2>
+        <a th:href="@{/shopme/admin/users/new}">Create user</a>
+        &nbsp;|&nbsp;
+        <a th:href="@{/shopme/admin/users/export/csv}">Export to CSV</a>
+    </div>
     <div th:if="${message}" class="message text-center">
         <p class="alert alert-success" id="successMessage">[[${message}]]</p>
     </div>
@@ -82,9 +84,11 @@
                 <input type="hidden" name="sortField" th:value="${sortField}">
                 <input type="hidden" name="sortDir" th:value="${sortDir}">
                 <label for="keyword" class="mr-2">Filter:</label>
-                <input type="search" name="keyword" id="keyword" class="form-control" style="max-width: 300px; margin-right: 5px;" required>
+                <input type="search" name="keyword" id="keyword" class="form-control"
+                       style="max-width: 300px; margin-right: 5px;" required>
                 <input type="submit" value="Search" class="btn btn-primary" style="margin-right: 5px;">
-                <input type="reset" value="Clear" class="btn btn-secondary ml-2" onclick="clearFilter()" style="margin-right: 5px;">
+                <input type="reset" value="Clear" class="btn btn-secondary ml-2" onclick="clearFilter()"
+                       style="margin-right: 5px;">
             </div>
 
         </form>
@@ -149,20 +153,20 @@
     <nav>
         <ul class="pagination justify-content-center">
             <li th:class="${currentPage == 1 ? 'page-item disabled' : 'page-item'}">
-                <a th:replace="~{admin/fragments :: page_link(1, 'First')}" ></a>
+                <a th:replace="~{admin/fragments :: page_link(1, 'First')}"></a>
             </li>
             <li th:class="${currentPage == 1 ? 'page-item disabled' : 'page-item'}">
-                <a th:replace="~{admin/fragments :: page_link(${currentPage - 1}, 'Previous')}" ></a>
+                <a th:replace="~{admin/fragments :: page_link(${currentPage - 1}, 'Previous')}"></a>
             </li>
             <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
                 th:each="i : ${#numbers.sequence(1, totalPages)}">
-                <a th:replace="~{admin/fragments :: page_link(${i}, ${i})}" ></a>
+                <a th:replace="~{admin/fragments :: page_link(${i}, ${i})}"></a>
             </li>
             <li th:class="${currentPage == totalPages ? 'page-item disabled' : 'page-item'}">
-                <a th:replace="~{admin/fragments :: page_link(${currentPage + 1}, 'Next')}" ></a>
+                <a th:replace="~{admin/fragments :: page_link(${currentPage + 1}, 'Next')}"></a>
             </li>
             <li th:class="${currentPage == totalPages ? 'page-item disabled' : 'page-item'}">
-                <a th:replace="~{admin/fragments :: page_link(${totalPages}, 'Last')}" ></a>
+                <a th:replace="~{admin/fragments :: page_link(${totalPages}, 'Last')}"></a>
             </li>
         </ul>
     </nav>

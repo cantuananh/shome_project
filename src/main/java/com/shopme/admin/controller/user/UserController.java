@@ -5,6 +5,7 @@ import com.shopme.admin.model.Role;
 import com.shopme.admin.model.User;
 import com.shopme.admin.service.UserNotFoundException;
 import com.shopme.admin.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -128,5 +129,13 @@ public class UserController {
         redirectAttributes.addFlashAttribute("message", message);
 
         return "redirect:/shopme/admin/users";
+    }
+
+    @GetMapping("/export/csv")
+    public void exportToCSV(HttpServletResponse response) throws IOException {
+        List<User> listUsers = userService.listAll();
+        UserCsvExporter exporter = new UserCsvExporter();
+
+        exporter.export(listUsers, response);
     }
 }
