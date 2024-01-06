@@ -84,7 +84,7 @@
                 <label for="keyword" class="mr-2">Filter:</label>
                 <input type="search" name="keyword" id="keyword" class="form-control" style="max-width: 300px; margin-right: 5px;" required>
                 <input type="submit" value="Search" class="btn btn-primary" style="margin-right: 5px;">
-                <input type="reset" value="Clear" class="btn btn-secondary ml-2" style="margin-right: 5px;">
+                <input type="reset" value="Clear" class="btn btn-secondary ml-2" onclick="clearFilter()" style="margin-right: 5px;">
             </div>
 
         </form>
@@ -243,6 +243,7 @@
             $('#successMessage').fadeOut();
         }, 3000);
 
+
         $('.delete-user').on("click", function () {
             var userId = $(this).data('user-id');
 
@@ -273,6 +274,10 @@
             });
         });
     });
+
+    let clearFilter = () => {
+        window.location = "[[@{/shopme/admin/users}]]";
+    }
 </script>
 
 </html>
