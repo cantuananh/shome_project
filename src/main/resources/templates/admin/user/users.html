@@ -174,20 +174,20 @@
     <nav>
         <ul class="pagination justify-content-center">
             <li th:class="${currentPage == 1 ? 'page-item disabled' : 'page-item'}"><a class="page-link"
-                                                                                       th:href="@{/shopme/admin/users/page/1}">First</a>
+                                                                                       th:href="@{'/shopme/admin/users/page/1?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">First</a>
             </li>
             <li th:class="${currentPage == 1 ? 'page-item disabled' : 'page-item'}"><a class="page-link"
-                                                                                       th:href="@{'/shopme/admin/users/page/' + ${currentPage - 1}}">Previous</a>
+                                                                                       th:href="@{'/shopme/admin/users/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
             </li>
             <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
                 th:each="i : ${#numbers.sequence(1, totalPages)}">
-                <a class="page-link" th:href="@{'/shopme/admin/users/page/' + ${i}}">[[${i}]]</a>
+                <a class="page-link" th:href="@{'/shopme/admin/users/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
             </li>
             <li th:class="${currentPage == totalPages ? 'page-item disabled' : 'page-item'}"><a class="page-link"
-                                                                                                th:href="@{'/shopme/admin/users/page/' + ${currentPage + 1}}">Next</a>
+                                                                                                th:href="@{'/shopme/admin/users/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
             </li>
             <li th:class="${currentPage == totalPages ? 'page-item disabled' : 'page-item'}"><a class="page-link"
-                                                                                                th:href="@{'/shopme/admin/users/page/' + ${totalPages}}">Last</a>
+                                                                                                th:href="@{'/shopme/admin/users/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
             </li>
         </ul>
     </nav>
