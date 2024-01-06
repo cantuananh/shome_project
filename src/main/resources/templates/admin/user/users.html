@@ -79,16 +79,54 @@
         <table class="table table-responsive-xl table-striped table-bordered">
             <thead class="thead-dark">
             <tr class="text-center">
-                <th>User ID</th>
-                <th>Photos</th>
-                <th>E-mail</th>
                 <th>
-                    <a>First name</a>
-                    <span th:if="${sortField == 'firstName'}" th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+                    <a th:if="${sortField != 'id'}"
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${sortDir}}">User
+                        ID</a>
+                    <a th:if="${sortField == 'id'}"
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${revertSortDir}}">User
+                        ID</a>
+                    <span th:if="${sortField == 'id'}"
+                          th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
                 </th>
-                <th>Last name</th>
+                <th>Photos</th>
+                <th>
+                    <a th:if="${sortField != 'email'}"
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${sortDir}}">E-mail</a>
+                    <a th:if="${sortField == 'email'}"
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${revertSortDir}}">E-mail</a>
+                    <span th:if="${sortField == 'email'}"
+                          th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+                </th>
+                <th>
+                    <a th:if="${sortField != 'firstName'}"
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${sortDir}}">First
+                        name</a>
+                    <a th:if="${sortField == 'firstName'}"
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${revertSortDir}}">First
+                        name</a>
+                    <span th:if="${sortField == 'firstName'}"
+                          th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+                </th>
+                <th>
+                    <a th:if="${sortField != 'lastName'}"
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${sortDir}}">Last
+                        name</a>
+                    <a th:if="${sortField == 'lastName'}"
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${revertSortDir}}">Last
+                        name</a>
+                    <span th:if="${sortField == 'lastName'}"
+                          th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+                </th>
                 <th>Roles</th>
-                <th>Enabled</th>
+                <th>
+                    <a th:if="${sortField != 'enabled'}"
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=enabled&sortDir=' + ${sortDir}}">Enabled</a>
+                    <a th:if="${sortField == 'enabled'}"
+                       th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=enabled&sortDir=' + ${revertSortDir}}">Enabled</a>
+                    <span th:if="${sortField == 'enabled'}"
+                          th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+                </th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -111,7 +149,7 @@
                 </td>
                 <td>
                     <a class="fas fa-edit fa-2x icon-green" title="Update this user"
-                               th:href="@{'/shopme/admin/users/edit/' + ${user.id}}"></a>
+                       th:href="@{'/shopme/admin/users/edit/' + ${user.id}}"></a>
 
                     <button type="button" class="btn delete-user" th:data-user-id="${user.id}"
                             data-toggle="modal" data-target="#deleteUserModal">
@@ -135,13 +173,22 @@
 <div>
     <nav>
         <ul class="pagination justify-content-center">
-            <li th:class="${currentPage == 1 ? 'page-item disabled' : 'page-item'}" ><a class="page-link" th:href="@{/shopme/admin/users/page/1}">First</a></li>
-            <li th:class="${currentPage == 1 ? 'page-item disabled' : 'page-item'}"><a class="page-link" th:href="@{'/shopme/admin/users/page/' + ${currentPage - 1}}">Previous</a></li>
-            <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}" th:each="i : ${#numbers.sequence(1, totalPages)}">
+            <li th:class="${currentPage == 1 ? 'page-item disabled' : 'page-item'}"><a class="page-link"
+                                                                                       th:href="@{/shopme/admin/users/page/1}">First</a>
+            </li>
+            <li th:class="${currentPage == 1 ? 'page-item disabled' : 'page-item'}"><a class="page-link"
+                                                                                       th:href="@{'/shopme/admin/users/page/' + ${currentPage - 1}}">Previous</a>
+            </li>
+            <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
+                th:each="i : ${#numbers.sequence(1, totalPages)}">
                 <a class="page-link" th:href="@{'/shopme/admin/users/page/' + ${i}}">[[${i}]]</a>
             </li>
-            <li th:class="${currentPage == totalPages ? 'page-item disabled' : 'page-item'}"><a class="page-link" th:href="@{'/shopme/admin/users/page/' + ${currentPage + 1}}">Next</a></li>
-            <li th:class="${currentPage == totalPages ? 'page-item disabled' : 'page-item'}"><a class="page-link" th:href="@{'/shopme/admin/users/page/' + ${totalPages}}">Last</a></li>
+            <li th:class="${currentPage == totalPages ? 'page-item disabled' : 'page-item'}"><a class="page-link"
+                                                                                                th:href="@{'/shopme/admin/users/page/' + ${currentPage + 1}}">Next</a>
+            </li>
+            <li th:class="${currentPage == totalPages ? 'page-item disabled' : 'page-item'}"><a class="page-link"
+                                                                                                th:href="@{'/shopme/admin/users/page/' + ${totalPages}}">Last</a>
+            </li>
         </ul>
     </nav>
 </div>
