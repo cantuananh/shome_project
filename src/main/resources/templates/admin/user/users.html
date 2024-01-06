@@ -73,6 +73,8 @@
         <a th:href="@{/shopme/admin/users/new}">Create user</a>
         &nbsp;|&nbsp;
         <a th:href="@{/shopme/admin/users/export/csv}">Export to CSV</a>
+        &nbsp;|&nbsp;
+        <a th:href="@{/shopme/admin/users/export/excel}">Export to Excel</a>
     </div>
     <div th:if="${message}" class="message text-center">
         <p class="alert alert-success" id="successMessage">[[${message}]]</p>
