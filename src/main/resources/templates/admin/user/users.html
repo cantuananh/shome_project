@@ -70,13 +70,10 @@
 <div>
     <div>
         <h2>User manager</h2>
-        <a th:href="@{/shopme/admin/users/new}">Create user</a>
-        &nbsp;|&nbsp;
-        <a th:href="@{/shopme/admin/users/export/csv}">Export to CSV</a>
-        &nbsp;|&nbsp;
-        <a th:href="@{/shopme/admin/users/export/excel}">Export to Excel</a>
-        &nbsp;|&nbsp;
-        <a th:href="@{/shopme/admin/users/export/pdf}">Export to PDF</a>
+        <a th:href="@{/shopme/admin/users/new}" class="fas fa-user-plus fa-2x icon-dark mr-4"></a>
+        <a th:href="@{/shopme/admin/users/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-4"></a>
+        <a th:href="@{/shopme/admin/users/export/excel}" class="fas fa-file-excel fa-2x icon-dark mr-4"></a>
+        <a th:href="@{/shopme/admin/users/export/pdf}" class="fas fa-file-pdf fa-2x icon-dark"></a>
     </div>
     <div th:if="${message}" class="message text-center">
         <p class="alert alert-success" id="successMessage">[[${message}]]</p>
@@ -90,9 +87,14 @@
                 <label for="keyword" class="mr-2">Filter:</label>
                 <input type="search" name="keyword" id="keyword" class="form-control"
                        style="max-width: 300px; margin-right: 5px;" required>
-                <input type="submit" value="Search" class="btn btn-primary" style="margin-right: 5px;">
-                <input type="reset" value="Clear" class="btn btn-secondary ml-2" onclick="clearFilter()"
-                       style="margin-right: 5px;">
+                <button type="submit" value="Search" class="btn btn-primary"
+                        style="margin-right: 5px; font-size: x-small;">
+                    <i class="fas fa-search fa-2x"></i>
+                </button>
+                <button type="reset" value="Clear" class="btn btn-secondary ml-2" onclick="clearFilter()"
+                        style="margin-right: 5px; font-size: x-small;">
+                    <i class="fa-2x fas fa-eraser"></i>
+                </button>
             </div>
 
         </form>
