@@ -26,6 +26,12 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
+<!--		update thymelead extras for spring security 6-->
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
+		</dependency>
+
 <!--		export csv-->
 		<dependency>
 			<groupId>net.sf.supercsv</groupId>

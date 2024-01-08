@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0">
+
+    <title>Login - Home page</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container-fluid">
+    <div>
+        <img th:src="@{/images/ShopmeAdminBig.png}">
+        <form method="post" style="max-width: 350px; margin: 0 auto">
+            <div th:if="${param.error}">
+                <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}}]]</p>
+            </div>
+            <p>Access to Shopme Control Panel</p>
+            <p>
+                <input type="email" name="email" class="form-control" placeholder="E-mail" required>
+            </p>
+            <p>
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+            </p>
+            <p>
+                <input type="submit" value="Login" class="btn btn-primary">
+            </p>
+        </form>
+    </div>
+</div>
+
+<div class="text-center">
+    <p>Shopme Control Panel - Copyright &copy; Shopme</p>
+</div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#successMessage').fadeOut();
+        }, 3000);
+
+
+        $('.delete-user').on("click", function () {
+            var userId = $(this).data('user-id');
+
+            $('#deleteUserModal').modal('show');
+
+            // Set giá trị cho input hidden
+            $('#modalUserId').val(userId);
+        });
+
+        $('#confirmDelete').on("click", function () {
+            var userId = $('#modalUserId').val();
+            console.log("user id", userId);
+
+            $.ajax({
+                type: 'POST',
+                url: '/shopme/admin/users/delete/' + userId,
+                headers: {
+                    'X-CSRF-TOKEN': $('#csrfToken').val()
+                },
+                success: function (response) {
+                    $('#deleteUserModal').modal('hide');
+                    window.location.reload();
+                    $('.message').text(response);
+                },
+                error: function (error) {
+                    console.error('Error deleting user:', error);
+                }
+            });
+        });
+    });
+
+    let clearFilter = () => {
+        window.location = "[[@{/shopme/admin/users}]]";
+    }
+</script>
+
+</html>
