@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<th th:fragment="column_link(fieldName, columnLabel)">
+<th th:fragment="column_link(fieldName, columnLabel, removeTag)" th:remove="${removeTag}">
     <a th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=' + ${fieldName} +'&sortDir=' + ${sortField != fieldName ? sortDir : revertSortDir}
                        + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${columnLabel}]]</a>
     <span th:if="${sortField == fieldName}"
