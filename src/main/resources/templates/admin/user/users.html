@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0">
+
     <title>Home page</title>
 
     <link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}">
@@ -16,9 +18,6 @@
     <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
-<style>
-    .
-</style>
 <body>
 <div class="container-fluid">
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
@@ -101,23 +100,27 @@
     </div>
 
 
-    <div>
+    <div class="full-details">
         <table class="table table-responsive-xl table-striped table-bordered">
             <thead class="thead-dark">
             <tr class="text-center">
-                <th th:replace="~{/admin/fragments :: column_link('id', 'User ID')}"></th>
+                <th class="hideable-column">
+                    <th th:replace="~{/admin/fragments :: column_link('id', 'User ID', 'tag')}"></th>
+                </th>
                 <th>Photos</th>
-                <th th:replace="~{/admin/fragments :: column_link('email', 'E-mail')}"></th>
-                <th th:replace="~{/admin/fragments :: column_link('firstName', 'First name')}"></th>
-                <th th:replace="~{/admin/fragments :: column_link('lastName', 'Last name')}"></th>
-                <th th:replace="~{/admin/fragments :: column_link('enabled', 'Enabled')}"></th>
+                <th class="hideable-column">
+                    <th th:replace="~{/admin/fragments :: column_link('email', 'E-mail', 'tag')}"></th>
+                </th>
+                <th th:replace="~{/admin/fragments :: column_link('firstName', 'First name', 'none')}"></th>
+                <th th:replace="~{/admin/fragments :: column_link('lastName', 'Last name', 'none')}"></th>
+                <th th:replace="~{/admin/fragments :: column_link('enabled', 'Enabled', 'none')}"></th>
                 <th>Roles</th>
                 <th>Action</th>
             </tr>
             </thead>
             <tbody class="text-center">
             <tr th:each="user, state: ${listUsers}">
-                <td th:text="${user.id}" id="thisUserId" th:value="${user.id}"></td>
+                <td class="hideable-column" th:text="${user.id}" id="thisUserId" th:value="${user.id}"></td>
                 <td>
                     <span th:if="${user.photos == null}" class="fa fa-portrait fa-3x icon-dark"></span>
                     <img th:if="${user.photos != null}" th:src="@{${user.getPhotoImagePath()}}" style="width: 100px">
@@ -148,6 +151,35 @@
     </div>
 </div>
 
+<div class="less-details">
+    <div th:each="user : ${listUsers}" class="row m-1">
+        <div class="col-4">
+            <span th:if="${user.photos == null}" class="fa fa-portrait fa-3x icon-dark"></span>
+            <img th:if="${user.photos != null}" th:src="@{${user.getPhotoImagePath()}}" style="width: 100px">
+        </div>
+        <div class="col-8">
+            <div class="mt-2">
+                <a style="text-decoration: none;" th:if="${user.enabled == true}" th:href="@{'/shopme/admin/users/' + ${user.id}
+                + '/enabled/false'}" class="fas fa-check-circle fa-2x icon-green"></a>
+                <a style="text-decoration: none;" th:if="${user.enabled == false}" th:href="@{'/shopme/admin/users/' + ${user.id}
+                + '/enabled/true'}" class="fas fa-check-circle fa-2x icon-dark"></a>
+                &nbsp;
+                <a class="fas fa-edit fa-2x icon-green" title="Update this user"
+                   th:href="@{'/shopme/admin/users/edit/' + ${user.id}}"></a>
+                &nbsp;
+                <button type="button" class="btn delete-user" th:data-user-id="${user.id}"
+                        data-toggle="modal" data-target="#deleteUserModal">
+                    <i class="fas fa-trash fa-2x icon-dark" style="color: red"></i>
+                </button>
+            </div>
+            <div>[[${user.fullName}]]</div>
+            <div>[[${user.roles}]]</div>
+        </div>
+
+    </div>
+
+</div>
+
 <div class="text-center m-1" th:if="${totalItems > 0}">
     <span>Showing user # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]</span>
 </div>
@@ -157,7 +189,7 @@
 </div>
 <div th:if="${totalItems > 0}">
     <nav>
-        <ul class="pagination justify-content-center">
+        <ul class="pagination justify-content-center flex-wrap">
             <li th:class="${currentPage == 1 ? 'page-item disabled' : 'page-item'}">
                 <a th:replace="~{admin/fragments :: page_link(1, 'First')}"></a>
             </li>
