@@ -42,13 +42,12 @@ public class WebSecurityConfig {
                         .anyRequest()
                         .authenticated())
                 .formLogin(form -> form
-                        .loginPage("/login")
-                        .usernameParameter("email").
-                        permitAll()
+                        .loginPage("/shopme/admin/login")
+                        .usernameParameter("email")
+                        .permitAll()
                 );
 
             http.headers(headers -> headers.frameOptions(f -> f.sameOrigin()));
-
 
         return http.build();
     }

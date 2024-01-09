@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0">
@@ -15,8 +15,8 @@
 
 <div class="container-fluid">
     <div>
-        <img th:src="@{/images/ShopmeAdminBig.png}">
-        <form method="post" style="max-width: 350px; margin: 0 auto">
+        <img th:src="@{/images/ShopmeAdminBig.png}" style="display: flex; margin: 0 auto">
+        <form th:action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto">
             <div th:if="${param.error}">
                 <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}}]]</p>
             </div>
@@ -38,47 +38,4 @@
     <p>Shopme Control Panel - Copyright &copy; Shopme</p>
 </div>
 </body>
-<script type="text/javascript">
-    $(document).ready(function () {
-        setTimeout(function () {
-            $('#successMessage').fadeOut();
-        }, 3000);
-
-
-        $('.delete-user').on("click", function () {
-            var userId = $(this).data('user-id');
-
-            $('#deleteUserModal').modal('show');
-
-            // Set giá trị cho input hidden
-            $('#modalUserId').val(userId);
-        });
-
-        $('#confirmDelete').on("click", function () {
-            var userId = $('#modalUserId').val();
-            console.log("user id", userId);
-
-            $.ajax({
-                type: 'POST',
-                url: '/shopme/admin/users/delete/' + userId,
-                headers: {
-                    'X-CSRF-TOKEN': $('#csrfToken').val()
-                },
-                success: function (response) {
-                    $('#deleteUserModal').modal('hide');
-                    window.location.reload();
-                    $('.message').text(response);
-                },
-                error: function (error) {
-                    console.error('Error deleting user:', error);
-                }
-            });
-        });
-    });
-
-    let clearFilter = () => {
-        window.location = "[[@{/shopme/admin/users}]]";
-    }
-</script>
-
 </html>
