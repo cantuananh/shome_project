@@ -1,7 +1,12 @@
 package com.shopme.admin.repository;
 
 import com.shopme.admin.model.Category;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-public interface CategoryRepository extends JpaRepository<Category, Integer> {
+import java.util.List;
+
+public interface CategoryRepository extends PagingAndSortingRepository<Category, Integer> {
+    @Query("select c from Category as c where c.parent is null")
+    public List<Category> findRootCategories();
+
 }

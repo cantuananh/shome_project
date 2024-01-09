@@ -25,10 +25,12 @@
                 <th>Action</th>
             </tr>
             </thead>
-            <tbody class="text-center">
+            <tbody>
             <tr th:each="category, state: ${listCategories}">
                 <td th:text="${category.id}"></td>
-                <td></td>
+                <td>
+                    <img th:src="@{${category.imagePath}}" alt="Image error" style="width: 100px" class="img-fluid">
+                </td>
                 <td>[[${category.name}]]</td>
                 <td>[[${category.alias}]]</td>
                 <td>[[${category.enabled ? 'true' : 'false'}]]</td>
