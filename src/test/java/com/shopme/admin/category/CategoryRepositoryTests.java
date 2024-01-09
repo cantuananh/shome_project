@@ -30,8 +30,8 @@ public class CategoryRepositoryTests {
 
     @Test
     public void testCreateSubCategory() {
-        Category parent = new Category(7);
-        Category computerComponent = new Category("Iphone", parent);
+        Category parent = new Category(4);
+        Category computerComponent = new Category("Gaming Laptops", parent);
         Category saveCategory = categoryRepository.save(computerComponent);
 
         assertThat(saveCategory.getId()).isGreaterThan(0);
