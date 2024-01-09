@@ -11,9 +11,8 @@
         <a th:href="@{/shopme/admin/users/export/excel}" class="fas fa-file-excel fa-2x icon-dark mr-4"></a>
         <a th:href="@{/shopme/admin/users/export/pdf}" class="fas fa-file-pdf fa-2x icon-dark"></a>
     </div>
-    <div th:if="${message}" class="message text-center">
-        <p class="alert alert-success" id="successMessage">[[${message}]]</p>
-    </div>
+
+    <div th:replace="~{admin/fragments :: message}"></div>
 
     <div class="mb-3">
         <form th:action="@{/shopme/admin/users/page/1}" class="form-inline">
@@ -217,5 +216,5 @@
         window.location = "[[@{/shopme/admin/users}]]";
     }
 </script>
-
+<!--<script th:src="@{/js/common.js}"></script>-->
 </html>

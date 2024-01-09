@@ -23,7 +23,7 @@ public class CategoryService {
 
         for (Category category : categoriesInDB) {
             if (category.getParent() == null) {
-                categoriesUseInForm.add(category); // Add the top-level category
+                categoriesUseInForm.add(Category.copyIdAndName(category.getId(), category.getName()));
                 listChildren(categoriesUseInForm, category, 1);
             }
         }
@@ -36,16 +36,20 @@ public class CategoryService {
         Set<Category> children = parent.getChildren();
 
         for (Category subCategory : children) {
-            // Add appropriate indentation based on subLevel
             String name = "";
             for (int i = 0; i < subLevel; i++) {
                 name += "--";
             }
             name += subCategory.getName();
 
-            categoriesUseInForm.add(new Category(name));
+            categoriesUseInForm.add(Category.copyIdAndName(subCategory.getId(), name));
             listChildren(categoriesUseInForm, subCategory, newSubLevel);
         }
+    }
+
+
+    public Category save(Category category) {
+        return categoryRepository.save(category);
     }
 
 }
