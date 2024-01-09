@@ -19,7 +19,7 @@ public class Category {
 
     @Column(length = 128, nullable = false)
     private String image;
-    private String enabled;
+    private boolean enabled;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
@@ -78,11 +78,11 @@ public class Category {
         this.image = image;
     }
 
-    public String getEnabled() {
+    public boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(String enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
