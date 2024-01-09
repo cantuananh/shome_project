@@ -10,6 +10,9 @@
         <a th:href="@{/shopme/admin/categories/new}" class="fas fa-user-plus fa-2x icon-dark mr-4"></a>
 <!--        <a th:href="@{/shopme/admin/users/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-4"></a>-->
     </div>
+
+    <div th:replace="~{admin/fragments :: message}"></div>
+
     <div>
         <table class="table table-responsive-xl table-striped table-bordered">
             <thead class="thead-dark">
@@ -43,4 +46,11 @@
 <head th:replace="~{admin/fragments :: page_footer}"></head>
 
 </body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function (){
+            $('#successMessage').fadeOut();
+        }, 3000);
+    })
+</script>
 </html>

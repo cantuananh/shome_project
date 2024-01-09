@@ -94,6 +94,10 @@
     <p>Shopme Control Panel - Copyright &copy; Shopme</p>
 </div>
 
+<div th:fragment="message" th:if="${message}" class="message text-center">
+    <p class="alert alert-success" id="successMessage">[[${message}]]</p>
+</div>
+
 
 </body>
 </html>
