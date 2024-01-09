@@ -35,7 +35,8 @@
                 <td>[[${category.alias}]]</td>
                 <td>[[${category.enabled ? 'true' : 'false'}]]</td>
                 <td>
-                    <button>edit</button>
+                    <a th:href="@{'/shopme/admin/categories/edit/' + ${category.id}}" class="fas fa-edit fa-2x icon-green"
+                    title="Update this category"></a>
                     <button>delete</button>
                 </td>
             </tr>
