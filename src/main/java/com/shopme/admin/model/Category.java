@@ -1,8 +1,6 @@
 package com.shopme.admin.model;
 
 import jakarta.persistence.*;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-
 import java.util.HashSet;
 import java.util.Set;
 

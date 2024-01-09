@@ -1,6 +1,7 @@
 package com.shopme.admin.repository;
 
 import com.shopme.admin.model.Category;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CategoryRepository extends PagingAndSortingRepository<Category, Integer> {
+public interface CategoryRepository extends JpaRepository<Category, Integer> {
 }
