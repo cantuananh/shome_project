@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="~{admin/fragments :: page_head}"></head>
+<style>
+    .thead-dark {
+        background-color: #343a40; /* Màu nền tối của Bootstrap */
+        color: white; /* Màu chữ trắng */
+    }
+</style>
 <body>
 <div th:replace="~{admin/fragments :: menu}"></div>
 
 <div>
-    <h2>User manager</h2>
+    <h2>Category manager</h2>
     <div class="mb-2">
         <a th:href="@{/shopme/admin/categories/new}" class="fas fa-user-plus fa-2x icon-dark mr-4"></a>
 <!--        <a th:href="@{/shopme/admin/users/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-4"></a>-->
@@ -19,7 +25,10 @@
             <tr class="text-center">
                 <th>Category ID</th>
                 <th>Category Image</th>
-                <th>Category Name</th>
+                <th>
+                    <a class="text-white" th:href="@{'/shopme/admin/categories?sortDir=' + ${revertSortDir}}">Category Name</a>
+                    <span th:class="${revertSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+                </th>
                 <th>Category Alias</th>
                 <th>Enabled</th>
                 <th>Action</th>

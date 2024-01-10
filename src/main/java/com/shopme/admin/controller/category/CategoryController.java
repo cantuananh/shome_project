@@ -5,6 +5,7 @@ import com.shopme.admin.model.Category;
 import com.shopme.admin.service.category.CategoryNoFoundException;
 import com.shopme.admin.service.category.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -22,8 +23,15 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @RequestMapping("")
-    public String getAllCategories(Model model) {
-        model.addAttribute("listCategories", categoryService.listAll());
+    public String getAllCategories(Model model, @Param("sortDir") String sortDir) {
+        if (sortDir == null || sortDir.isEmpty()) {
+            sortDir = "asc";
+        }
+
+        String revertSortDir = sortDir.equals("asc") ? "desc" : "asc";
+        List<Category> listCategories = categoryService.listAll(sortDir);
+        model.addAttribute("listCategories", listCategories);
+        model.addAttribute("revertSortDir", revertSortDir);
 
         return "/admin/category/categories";
     }
