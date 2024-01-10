@@ -1,4 +1,4 @@
-package com.shopme.admin.service;
+package com.shopme.admin.service.category;
 
 import com.shopme.admin.model.Category;
 import com.shopme.admin.repository.CategoryRepository;
@@ -24,11 +24,11 @@ public class CategoryService {
     public List<Category> listHierarchicalCategories(List<Category> rootCategories) {
         List<Category> hierarchicalCategories = new ArrayList<>();
 
-        for (Category rootCategory: rootCategories) {
+        for (Category rootCategory : rootCategories) {
             hierarchicalCategories.add(Category.copyFull(rootCategory));
 
             Set<Category> children = rootCategory.getChildren();
-            for (Category subCategory: children) {
+            for (Category subCategory : children) {
                 String name = "--" + subCategory.getName();
                 hierarchicalCategories.add(Category.copyFull(subCategory, name));
                 listSubHierarchicalCategories(hierarchicalCategories, subCategory, 1);
@@ -42,7 +42,7 @@ public class CategoryService {
         Set<Category> children = parent.getChildren();
         int newSubLevel = subLevel + 1;
 
-        for (Category subCategory: children) {
+        for (Category subCategory : children) {
             String name = "";
             for (int i = 0; i < newSubLevel; i++) {
                 name += "--";
@@ -94,9 +94,37 @@ public class CategoryService {
     public Category get(Integer id) throws CategoryNoFoundException {
         try {
             return categoryRepository.findById(id).get();
-        } catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             throw new CategoryNoFoundException("Could not find any category with ID " + id);
         }
+    }
+
+    public String checkUnique(Integer id, String name, String alias) {
+        boolean isCreatingNew = (id == null || id == 0);
+
+        Category categoryByName = categoryRepository.findByName(name);
+
+        if (isCreatingNew) {
+            if (categoryByName != null) {
+                return "DuplicatedName";
+            } else {
+                Category categoryByAlias = categoryRepository.findByAlias(alias);
+                if (categoryByAlias != null) {
+                    return "DuplicatedAlias";
+                }
+            }
+        } else {
+            if (categoryByName != null && categoryByName.getId() != id) {
+                return "DuplicatedName";
+            } else {
+                Category categoryByAlias = categoryRepository.findByAlias(alias);
+                if (categoryByAlias != null && categoryByAlias.getId() != id) {
+                    return "DuplicatedAlias";
+                }
+            }
+        }
+
+        return "OK";
     }
 
 }

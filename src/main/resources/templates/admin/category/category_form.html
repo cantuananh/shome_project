@@ -8,8 +8,9 @@
     <h2 class="text-center mb-3">Category manager | [[${pageTitle}]]</h2>
     <form th:action="@{/shopme/admin/categories/save}" th:method="post" th:object="${category}"
           enctype="multipart/form-data"
+          onsubmit="checkUnique(this, event)"
           style="max-width: 700px; margin: 0 auto">
-        <input type="hidden" th:field="*{id}" id="userId">
+        <input type="hidden" th:field="*{id}" id="categoryId">
         <div class="border border-secondary rounded p-3">
             <div class="form-group row mb-3">
                 <label class="col-sm-4 col-form-label">Category name</label>
@@ -22,7 +23,7 @@
                 <label class="col-sm-4 col-form-label">Alias</label>
                 <div class="col-sm-8">
                     <input type="text" class="form-control" th:field="*{alias}" required minlength="2"
-                           maxlength="64">
+                           maxlength="64" id="alias">
                 </div>
             </div>
             <div class="form-group row mb-3">
@@ -96,41 +97,36 @@
         reader.readAsDataURL(file);
     }
 
-    function checkEmailUnique(form) {
-        let userId = $('#userId').val();
+    function checkUnique(form, event) {
+        event.preventDefault();
+        let categoryId = $('#categoryId').val();
+        let categoryName = $('#name').val();
+        let categoryAlias = $('#alias').val();
+        let url = "[[@{/shopme/admin/categories/check_unique}]]";
 
-        if (userId) {
-            form.submit();
-            return false;
-        }
+        let csrfValue = $('input[name ="_csrf"]').val();
 
-        let url = "[[@{/shopme/admin/users/check-email}]]";
-        let csrfValue = $("input[name='_csrf']").val();
-        let userEmail = $('#email').val();
         let params = {
-            userId: userId,
-            email: userEmail,
+            id: categoryId,
+            name: categoryName,
+            alias: categoryAlias,
             _csrf: csrfValue
         };
 
         $.post(url, params, function (response) {
-            if (response == "Ok") {
+            if (response === "OK") {
                 form.submit();
-            } else if (response == "Duplicated") {
-                // showModalDialog("Duplicated email", "There is another user having the email " + userEmail);
-                alert("There is another user having the email " + userEmail);
+            } else if (response === "DuplicatedName") {
+                alert("Error duplicated name with :" + response +". You can try another name!");
+            } else if (response === "DuplicatedAlias") {
+                alert("Error duplicated alias with :" + response +". You can try another alias!");
             }
-        });
+        }).fail(function (response) {
+            alert("Failed! Error: " + response);
+        })
 
         return false;
     }
-
-
-    function showModalDialog(title, message) {
-        $("#modalTitle").text(title);
-        $("#modalBody").text(message);
-        $("#modalDialog").modal();
-    }
 </script>
-<script th:src="@{/js/common_form.js}"></script>
+<!--<script th:src="@{/js/common_form.js}"></script>-->
 </html>
