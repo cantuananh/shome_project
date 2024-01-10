@@ -1,13 +1,14 @@
 package com.shopme.admin.repository;
 
 import com.shopme.admin.model.Category;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
 public interface CategoryRepository extends PagingAndSortingRepository<Category, Integer> {
     @Query("select c from Category as c where c.parent is null")
-    public List<Category> findRootCategories();
+    public List<Category> findRootCategories(Sort sort);
 
     public Category findByName(String name);
     public Category findByAlias(String alias);
