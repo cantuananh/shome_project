@@ -49,7 +49,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    WebSecurityCustomizer configure() throws Exception {
+    WebSecurityCustomizer configure() {
         return (web) -> web.ignoring().requestMatchers("/images/**", "/js/**", "/webjars/**");
     }
 }

@@ -14,7 +14,7 @@
 <div class="container-fluid">
     <div>
         <img th:src="@{/images/ShopmeAdminBig.png}" style="display: flex; margin: 0 auto">
-        <form th:action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto">
+        <form th:action="@{/login}" method="post" th:token="true" style="max-width: 350px; margin: 0 auto">
             <div th:if="${param.error}">
                 <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
             </div>
