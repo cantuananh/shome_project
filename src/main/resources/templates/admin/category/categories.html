@@ -42,7 +42,15 @@
                 </td>
                 <td>[[${category.name}]]</td>
                 <td>[[${category.alias}]]</td>
-                <td>[[${category.enabled ? 'true' : 'false'}]]</td>
+                <td>
+                    <a th:if="${category.enabled == true}" th:href="@{'/shopme/admin/categories/' + ${category.id} + '/enabled/false'}" class="fas fa-2x fa-check-circle icon-green" style="text-decoration: none;"
+                       title="Disabled this category"
+                    ></a>
+
+                    <a th:if="${category.enabled == false}" th:href="@{'/shopme/admin/categories/' + ${category.id} + '/enabled/true'}" class="fas fa-2x fa-check-circle icon-dark" style="text-decoration: none;"
+                       title="Enabled this category"
+                    ></a>
+                </td>
                 <td>
                     <a th:href="@{'/shopme/admin/categories/edit/' + ${category.id}}" class="fas fa-edit fa-2x icon-green"
                     title="Update this category"></a>
