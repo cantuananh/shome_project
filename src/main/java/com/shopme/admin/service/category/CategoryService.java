@@ -154,4 +154,8 @@ public class CategoryService {
 
         return sortedChildren;
     }
+
+    public void updateCategoryEnabledStatus(Integer id, boolean status){
+        categoryRepository.updateCategoryEnabledStatus(id, status);
+    }
 }

@@ -87,4 +87,20 @@ public class CategoryController {
 
         return "redirect:/shopme/admin/categories";
     }
+
+    @GetMapping("/{id}/enabled/{status}")
+    public String updateCategoryEnabledStatus(@PathVariable("id") Integer id, @PathVariable("status") boolean enabled,
+                                              RedirectAttributes redirectAttributes) {
+
+        System.out.println(id + " - " + enabled);
+        categoryService.updateCategoryEnabledStatus(id, enabled);
+
+        String status = enabled ? "enabled" : "disabled";
+
+        String message = "The category ID " + id + " has been " + status;
+
+        redirectAttributes.addFlashAttribute("message", message);
+
+        return "redirect:/shopme/admin/categories";
+    }
 }

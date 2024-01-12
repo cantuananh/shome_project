@@ -102,4 +102,14 @@ public class CategoryRepositoryTests {
         assertThat(category).isNotNull();
         assertThat(category.getName()).isEqualTo(alias);
     }
+
+    @Test
+    public void testUpdateEnabledStatusCategory() {
+        boolean status = true;
+        Integer id = 3;
+
+        categoryRepository.updateCategoryEnabledStatus(id, status);
+
+        assertThat(categoryRepository.findById(id).get().isEnabled()).isNotEqualTo(status);
+    }
 }
