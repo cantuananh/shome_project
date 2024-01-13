@@ -41,6 +41,7 @@ public class WebSecurityConfig {
                         .loginPage("/shopme/admin/login")
                         .usernameParameter("email")
                         .permitAll()
+                        .defaultSuccessUrl("/shopme/admin/home")
                 );
 
             http.headers(headers -> headers.frameOptions(f -> f.sameOrigin()));
