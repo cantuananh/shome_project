@@ -54,11 +54,41 @@
                 <td>
                     <a th:href="@{'/shopme/admin/categories/edit/' + ${category.id}}" class="fas fa-edit fa-2x icon-green"
                     title="Update this category"></a>
-                    <button>delete</button>
+                    <th:block th:if="${category.hasChildren == false}">
+                        <a href="#" class="fas fa-trash fa-2x icon-dark"
+                           title="Delete this category"
+                           data-toggle="modal"
+                           data-target="#deleteModal"
+                           th:attr="data-category-id=${category.id}"></a>
+                    </th:block>
                 </td>
             </tr>
             </tbody>
         </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete customer confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <input type="hidden" id="csrfToken" th:value="${_csrf.token}"/>
+
+            </div>
+            <div class="modal-body">
+                You sure delete?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <input type="hidden" id="modalCategoryId"/>
+                <button type="button" class="btn btn-danger" id="confirmDelete">Yes</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -71,6 +101,39 @@
         setTimeout(function (){
             $('#successMessage').fadeOut();
         }, 3000);
+
+        $('#deleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var categoryId = button.data('category-id');
+
+            $('#confirmDelete').data('category-id', categoryId);
+        });
+
+        $('#confirmDelete').on('click', function () {
+            var categoryId = $(this).data('category-id');
+            console.log(categoryId);
+
+            $.ajax({
+                type: 'POST',
+                url: '/shopme/admin/categories/delete/' + categoryId,
+                headers: {
+                    'X-CSRF-TOKEN': $('#csrfToken').val()
+
+                },
+                success: function (data) {
+                    console.log(data)
+
+                    $('#deleteModal').modal('hide');
+                    window.location.reload();
+                    $('.message').text(data);
+                },
+                error: function (error) {
+                    console.error('Error deleting user:', error);
+                    $('#deleteModal').modal('hide');
+                }
+            });
+        });
+
     })
 </script>
 </html>
