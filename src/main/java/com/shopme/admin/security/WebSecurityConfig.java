@@ -35,16 +35,18 @@ public class WebSecurityConfig {
     SecurityFilterChain configureHttpSecurity(HttpSecurity http) throws Exception {
         http.authenticationProvider(authenticationProvider());
         http.authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/shopme/admin/users/**").hasAnyAuthority("Admin")
+//                        .requestMatchers("/shopme/admin/categories/**").hasAnyAuthority("Assistant", "Admin")
                         .anyRequest()
                         .authenticated())
                 .formLogin(form -> form
                         .loginPage("/shopme/admin/login")
                         .usernameParameter("email")
-                        .permitAll()
                         .defaultSuccessUrl("/shopme/admin/home")
-                );
+                        .permitAll()
+                ).logout(logout -> logout.permitAll());
 
-            http.headers(headers -> headers.frameOptions(f -> f.sameOrigin()));
+        http.headers(headers -> headers.frameOptions(f -> f.sameOrigin()));
 
         return http.build();
     }
