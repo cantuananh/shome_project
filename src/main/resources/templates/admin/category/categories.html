@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{admin/fragments :: page_head}"></head>
+<style>
+    .thead-dark {
+        background-color: #343a40;
+        color: white;
+    /
+    }
+</style>
+<body>
+<div th:replace="~{admin/fragments :: menu}"></div>
+
+<div>
+    <h2>Category manager</h2>
+    <div class="mb-2">
+        <a th:href="@{/shopme/admin/categories/new}" class="fas fa-user-plus fa-2x icon-dark mr-4"></a>
+        <a th:href="@{/shopme/admin/categories/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-4"></a>
+    </div>
+
+    <div th:replace="~{admin/fragments :: message}"></div>
+
+    <div th:replace="~{admin/fragments :: search_form('categories')}"></div>
+
+    <div class="full-details">
+        <table class="table table-responsive-xl table-striped table-bordered table-hover">
+            <thead class="thead-dark">
+            <tr class="text-center">
+                <th>Category ID</th>
+                <th>Category Image</th>
+                <th>
+                    <a class="text-white"
+                       th:href="@{'/shopme/admin/categories/page/' + ${currentPage} + '?sortDir=' + ${revertSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Category
+                        Name</a>
+                    <span th:class="${revertSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+                </th>
+                <th>Category Alias</th>
+                <th>Enabled</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="category, state: ${listCategories}">
+                <td th:text="${category.id}"></td>
+                <td>
+                    <img th:src="@{${category.imagePath}}" alt="Image error" style="width: 100px" class="img-fluid">
+                </td>
+                <td>[[${category.name}]]</td>
+                <td>[[${category.alias}]]</td>
+                <td>
+                    <div th:replace="~{/admin/fragments :: category_status}"></div>
+                </td>
+                <td>
+                    <div th:replace="~{admin/fragments :: category_action}"></div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="less-details">
+        <div th:each="cat : ${listCategories}" class="row m-1">
+            <div class="col-4">
+                <img th:src="@{${cat.imagePath}}" alt="Image error" style="width: 100px" class="img-fluid">
+            </div>
+            <div class="col-8">
+                <div>[[${cat.name}]]</div>
+                <div th:replace="~{/admin/fragments :: category_status}"></div>
+                <div th:replace="~{admin/fragments :: category_action}"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div th:if="${keyword != null}" class="text-center">
+        <span>Search result does not show category in hierarchical form</span>
+        <div th:replace="~{admin/fragments :: pagination('categories', 'categories')}"></div>
+    </div>
+    <th:block th:unless="${keyword != null}">
+        <div th:replace="~{admin/fragments :: pagination('categories', 'Top-level categories')}"></div>
+    </th:block>
+</div>
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete customer confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <input type="hidden" id="csrfToken" th:value="${_csrf.token}"/>
+
+            </div>
+            <div class="modal-body">
+                You sure delete?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <input type="hidden" id="modalCategoryId"/>
+                <button type="button" class="btn btn-danger" id="confirmDelete">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<head th:replace="~{admin/fragments :: page_footer}"></head>
+
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#successMessage').fadeOut();
+        }, 3000);
+
+        $('#deleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var categoryId = button.data('category-id');
+
+            $('#confirmDelete').data('category-id', categoryId);
+        });
+
+        $('#confirmDelete').on('click', function () {
+            var categoryId = $(this).data('category-id');
+            console.log(categoryId);
+
+            $.ajax({
+                type: 'POST',
+                url: '/shopme/admin/categories/delete/' + categoryId,
+                headers: {
+                    'X-CSRF-TOKEN': $('#csrfToken').val()
+
+                },
+                success: function (data) {
+                    console.log(data)
+
+                    $('#deleteModal').modal('hide');
+                    window.location.reload();
+                    $('.message').text(data);
+                },
+                error: function (error) {
+                    console.error('Error deleting user:', error);
+                    $('#deleteModal').modal('hide');
+                }
+            });
+        });
+
+    })
+</script>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fragment</title>
+</head>
+<body>
+<th th:fragment="column_link(fieldName, columnLabel, removeTag)" th:remove="${removeTag}">
+    <a th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=' + ${fieldName} +'&sortDir=' + ${sortField != fieldName ? sortDir : revertSortDir}
+                       + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${columnLabel}]]</a>
+    <span th:if="${sortField == fieldName}"
+          th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+</th>
+
+
+<a th:fragment="page_link(moduleURL, pageNum, label)"
+   class="page-link"
+   th:href="@{'/shopme/admin/' + ${moduleURL} +'/page/' + ${pageNum} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+    [[${label}]]</a>
+</li>
+
+
+<div class="container-fluid" th:fragment="menu">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <a href="" class="navbar-brand" th:href="@{/}">
+            <img th:src="@{/images/ShopmeAdminSmall.png}" alt="Image error">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="topNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a th:href="@{/shopme/admin/users}" class="nav-link">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/shopme/admin/categories}" class="nav-link">Categories</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/shopme/admin/brands}" class="nav-link">Brands</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/shopme/admin/products}" class="nav-link">Product</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/shopme/admin/customers}" class="nav-link">Customers</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/shopme/admin/shipping}" class="nav-link">Shipping</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/shopme/admin/orders}" class="nav-link">Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/shopme/admin/reports}" class="nav-link">Reports</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/shopme/admin/articles}" class="nav-link">Articles</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/shopme/admin/menus}" class="nav-link">Menus</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/shopme/admin/settings}" class="nav-link">Settings</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+
+<div th:fragment="pagination(moduleURL, entityName)" th:remove="tag">
+    <div class="text-center m-1" th:if="${totalItems > 0}">
+        <span>Showing [[${entityName}]] # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]</span>
+    </div>
+
+    <div class="text-center m-1" th:unless="${totalItems > 0}">
+        <span>No [[${entityName}]] found</span>
+    </div>
+    <div th:if="${totalItems > 0}">
+        <nav>
+            <ul class="pagination justify-content-center flex-wrap">
+                <li th:class="${currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                    <a th:replace="~{admin/fragments :: page_link(${moduleURL}, 1, 'First')}"></a>
+                </li>
+                <li th:class="${currentPage == 1 ? 'page-item disabled' : 'page-item'}">
+                    <a th:replace="~{admin/fragments :: page_link(${moduleURL}, ${currentPage - 1}, 'Previous')}"></a>
+                </li>
+                <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
+                    th:each="i : ${#numbers.sequence(1, totalPages)}">
+                    <a th:replace="~{admin/fragments :: page_link(${moduleURL}, ${i}, ${i})}"></a>
+                </li>
+                <li th:class="${currentPage == totalPages ? 'page-item disabled' : 'page-item'}">
+                    <a th:replace="~{admin/fragments :: page_link(${moduleURL}, ${currentPage + 1}, 'Next')}"></a>
+                </li>
+                <li th:class="${currentPage == totalPages ? 'page-item disabled' : 'page-item'}">
+                    <a th:replace="~{admin/fragments :: page_link(${moduleURL}, ${totalPages}, 'Last')}"></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<head th:fragment="page_head">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0">
+
+    <title>[[${pageTitle}]]</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <link type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+
+
+<div class="text-center" th:fragment="page_footer">
+    <p>Shopme Control Panel - Copyright &copy; Shopme</p>
+</div>
+
+
+<div th:fragment="message" th:if="${message}" class="message text-center">
+    <p class="alert alert-success" id="successMessage">[[${message}]]</p>
+</div>
+
+
+<div class="mb-3" th:fragment="search_form(moduleURL)">
+    <form th:action="@{'/shopme/admin/'+ ${moduleURL} +'/page/1'}" class="form-inline">
+        <div class="mr-2 d-flex align-items-center">
+            <input type="hidden" name="sortField" th:value="${sortField}">
+            <input type="hidden" name="sortDir" th:value="${sortDir}">
+            <label for="keyword" class="mr-2">Filter:</label>
+            <input type="search" name="keyword" id="keyword" class="form-control"
+                   style="max-width: 300px; margin-right: 5px;" required>
+            <button type="submit" value="Search" class="btn btn-primary"
+                    style="margin-right: 5px; font-size: x-small;">
+                <i class="fas fa-search fa-2x"></i>
+            </button>
+            <button type="reset" value="Clear" class="btn btn-secondary ml-2" onclick="clearFilter()"
+                    style="margin-right: 5px; font-size: x-small;">
+                <i class="fa-2x fas fa-eraser"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+
+<div th:fragment="category_status">
+    <a th:if="${category.enabled == true}"
+       th:href="@{'/shopme/admin/categories/' + ${category.id} + '/enabled/false'}"
+       class="fas fa-2x fa-check-circle icon-green" style="text-decoration: none;"
+       title="Disabled this category"
+    ></a>
+
+    <a th:if="${category.enabled == false}"
+       th:href="@{'/shopme/admin/categories/' + ${category.id} + '/enabled/true'}"
+       class="fas fa-2x fa-check-circle icon-dark" style="text-decoration: none;"
+       title="Enabled this category"
+    ></a>
+</div>
+
+
+<div th:fragment="category_action">
+    <a th:href="@{'/shopme/admin/categories/edit/' + ${category.id}}"
+       class="fas fa-edit fa-2x icon-green"
+       title="Update this category"></a>
+    <th:block th:if="${category.hasChildren == false}">
+        <a href="#" class="fas fa-trash fa-2x icon-dark"
+           title="Delete this category"
+           data-toggle="modal"
+           data-target="#deleteModal"
+           th:attr="data-category-id=${category.id}"></a>
+    </th:block>
+</div>
+
+
+</body>
+</html>

@@ -145,11 +145,34 @@ public class User {
                 '}';
     }
 
+    public User(String email, String password, String firstName, String lastName, boolean enabled, Set<Role> roles) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.enabled = enabled;
+        this.roles = roles;
+    }
+
     public void addRole(Role role){
         this.roles.add(role);
     }
 
     public void removeRole(Role role) {
         this.roles.remove(role);
+    }
+
+    @Transient
+    public String getPhotoImagePath() {
+        if (id == null || photos == null) {
+            return "/images/default-user.png";
+
+        }
+        return "/user-photos/" + this.id +"/" + this.photos;
+    }
+
+    @Transient
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 }
