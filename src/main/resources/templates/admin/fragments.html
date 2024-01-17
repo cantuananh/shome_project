@@ -126,8 +126,30 @@
     <p>Shopme Control Panel - Copyright &copy; Shopme</p>
 </div>
 
+
 <div th:fragment="message" th:if="${message}" class="message text-center">
     <p class="alert alert-success" id="successMessage">[[${message}]]</p>
+</div>
+
+
+<div class="mb-3" th:fragment="search_form(moduleURL)">
+    <form th:action="@{'/shopme/admin/'+ ${moduleURL} +'/page/1'}" class="form-inline">
+        <div class="mr-2 d-flex align-items-center">
+            <input type="hidden" name="sortField" th:value="${sortField}">
+            <input type="hidden" name="sortDir" th:value="${sortDir}">
+            <label for="keyword" class="mr-2">Filter:</label>
+            <input type="search" name="keyword" id="keyword" class="form-control"
+                   style="max-width: 300px; margin-right: 5px;" required>
+            <button type="submit" value="Search" class="btn btn-primary"
+                    style="margin-right: 5px; font-size: x-small;">
+                <i class="fas fa-search fa-2x"></i>
+            </button>
+            <button type="reset" value="Clear" class="btn btn-secondary ml-2" onclick="clearFilter()"
+                    style="margin-right: 5px; font-size: x-small;">
+                <i class="fa-2x fas fa-eraser"></i>
+            </button>
+        </div>
+    </form>
 </div>
 
 

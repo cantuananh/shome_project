@@ -14,10 +14,12 @@
     <h2>Category manager</h2>
     <div class="mb-2">
         <a th:href="@{/shopme/admin/categories/new}" class="fas fa-user-plus fa-2x icon-dark mr-4"></a>
-<!--        <a th:href="@{/shopme/admin/users/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-4"></a>-->
+        <!--        <a th:href="@{/shopme/admin/users/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-4"></a>-->
     </div>
 
     <div th:replace="~{admin/fragments :: message}"></div>
+
+    <div th:replace="~{admin/fragments :: search_form('categories')}"></div>
 
     <div>
         <table class="table table-responsive-xl table-striped table-bordered">
@@ -26,7 +28,9 @@
                 <th>Category ID</th>
                 <th>Category Image</th>
                 <th>
-                    <a class="text-white" th:href="@{'/shopme/admin/categories/page/' + ${currentPage} + '?sortDir=' + ${revertSortDir}}">Category Name</a>
+                    <a class="text-white"
+                       th:href="@{'/shopme/admin/categories/page/' + ${currentPage} + '?sortDir=' + ${revertSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Category
+                        Name</a>
                     <span th:class="${revertSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
                 </th>
                 <th>Category Alias</th>
@@ -43,17 +47,22 @@
                 <td>[[${category.name}]]</td>
                 <td>[[${category.alias}]]</td>
                 <td>
-                    <a th:if="${category.enabled == true}" th:href="@{'/shopme/admin/categories/' + ${category.id} + '/enabled/false'}" class="fas fa-2x fa-check-circle icon-green" style="text-decoration: none;"
+                    <a th:if="${category.enabled == true}"
+                       th:href="@{'/shopme/admin/categories/' + ${category.id} + '/enabled/false'}"
+                       class="fas fa-2x fa-check-circle icon-green" style="text-decoration: none;"
                        title="Disabled this category"
                     ></a>
 
-                    <a th:if="${category.enabled == false}" th:href="@{'/shopme/admin/categories/' + ${category.id} + '/enabled/true'}" class="fas fa-2x fa-check-circle icon-dark" style="text-decoration: none;"
+                    <a th:if="${category.enabled == false}"
+                       th:href="@{'/shopme/admin/categories/' + ${category.id} + '/enabled/true'}"
+                       class="fas fa-2x fa-check-circle icon-dark" style="text-decoration: none;"
                        title="Enabled this category"
                     ></a>
                 </td>
                 <td>
-                    <a th:href="@{'/shopme/admin/categories/edit/' + ${category.id}}" class="fas fa-edit fa-2x icon-green"
-                    title="Update this category"></a>
+                    <a th:href="@{'/shopme/admin/categories/edit/' + ${category.id}}"
+                       class="fas fa-edit fa-2x icon-green"
+                       title="Update this category"></a>
                     <th:block th:if="${category.hasChildren == false}">
                         <a href="#" class="fas fa-trash fa-2x icon-dark"
                            title="Delete this category"
@@ -68,9 +77,16 @@
     </div>
 </div>
 
-<div th:replace="~{admin/fragments :: pagination('categories', 'categories')}"></div>
+<div th:if="${keyword != null}" class="text-center">
+    <span>Search result does not show category in hierarchical form</span>
+    <div th:replace="~{admin/fragments :: pagination('categories', 'categories')}"></div>
+</div>
+<th:block th:unless="${keyword != null}">
+    <div th:replace="~{admin/fragments :: pagination('categories', 'Top-level categories')}"></div>
+</th:block>
 
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -99,7 +115,7 @@
 </body>
 <script type="text/javascript">
     $(document).ready(function () {
-        setTimeout(function (){
+        setTimeout(function () {
             $('#successMessage').fadeOut();
         }, 3000);
 
