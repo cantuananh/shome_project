@@ -3,7 +3,7 @@ package com.shopme.admin.controller.category;
 import com.shopme.admin.controller.FileUploadUtil;
 import com.shopme.admin.model.Category;
 import com.shopme.admin.service.category.CategoryNoFoundException;
-import com.shopme.admin.service.category.CategoryNotFoundException;
+import com.shopme.admin.service.category.CategoryPageInfo;
 import com.shopme.admin.service.category.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -24,17 +24,34 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @RequestMapping("")
-    public String getAllCategories(Model model, @Param("sortDir") String sortDir) {
+    public String listFirstPage(Model model, @Param("sortDir") String sortDir) {
+        return listByPage(1, model, sortDir);
+    }
+
+    @GetMapping("/page/{pageNum}")
+    public String listByPage(@PathVariable(name = "pageNum") int pageNum,
+                             Model model,
+                             @Param("sortDir") String sortDir) {
         if (sortDir == null || sortDir.isEmpty()) {
             sortDir = "asc";
         }
 
+        CategoryPageInfo pageInfo = new CategoryPageInfo();
+        List<Category> listCategories = categoryService.listByPage(pageInfo, pageNum, sortDir);
+
         String revertSortDir = sortDir.equals("asc") ? "desc" : "asc";
-        List<Category> listCategories = categoryService.listAll(sortDir);
+        System.out.println("total: " + pageInfo.getTotalPages());
+
+        model.addAttribute("totalPages", pageInfo.getTotalPages());
+        model.addAttribute("totalItems", pageInfo.getTotalElements());
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("sortField", "name");
+        model.addAttribute("sortDir", sortDir);
         model.addAttribute("listCategories", listCategories);
         model.addAttribute("revertSortDir", revertSortDir);
 
         return "/admin/category/categories";
+
     }
 
     @RequestMapping("/new")
@@ -60,7 +77,7 @@ public class CategoryController {
 
             return "admin/category/category_form";
 
-        } catch (CategoryNoFoundException e){
+        } catch (CategoryNoFoundException e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
             return "redirect:/shopme/admin/categories";
         }
@@ -71,8 +88,8 @@ public class CategoryController {
     @PostMapping("/save")
     public String saveCategory(RedirectAttributes redirectAttributes,
                                Category category,
-                               @RequestParam("fileImage")MultipartFile multipartFile) throws IOException {
-        if (!multipartFile.isEmpty()){
+                               @RequestParam("fileImage") MultipartFile multipartFile) throws IOException {
+        if (!multipartFile.isEmpty()) {
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
             category.setImage(fileName);
 
