@@ -3,8 +3,9 @@
 <head th:replace="~{admin/fragments :: page_head}"></head>
 <style>
     .thead-dark {
-        background-color: #343a40; /* Màu nền tối của Bootstrap */
-        color: white; /* Màu chữ trắng */
+        background-color: #343a40;
+        color: white;
+    /
     }
 </style>
 <body>
@@ -21,8 +22,8 @@
 
     <div th:replace="~{admin/fragments :: search_form('categories')}"></div>
 
-    <div>
-        <table class="table table-responsive-xl table-striped table-bordered">
+    <div class="full-details">
+        <table class="table table-responsive-xl table-striped table-bordered table-hover">
             <thead class="thead-dark">
             <tr class="text-center">
                 <th>Category ID</th>
@@ -47,43 +48,39 @@
                 <td>[[${category.name}]]</td>
                 <td>[[${category.alias}]]</td>
                 <td>
-                    <a th:if="${category.enabled == true}"
-                       th:href="@{'/shopme/admin/categories/' + ${category.id} + '/enabled/false'}"
-                       class="fas fa-2x fa-check-circle icon-green" style="text-decoration: none;"
-                       title="Disabled this category"
-                    ></a>
-
-                    <a th:if="${category.enabled == false}"
-                       th:href="@{'/shopme/admin/categories/' + ${category.id} + '/enabled/true'}"
-                       class="fas fa-2x fa-check-circle icon-dark" style="text-decoration: none;"
-                       title="Enabled this category"
-                    ></a>
+                    <div th:replace="~{/admin/fragments :: category_status}"></div>
                 </td>
                 <td>
-                    <a th:href="@{'/shopme/admin/categories/edit/' + ${category.id}}"
-                       class="fas fa-edit fa-2x icon-green"
-                       title="Update this category"></a>
-                    <th:block th:if="${category.hasChildren == false}">
-                        <a href="#" class="fas fa-trash fa-2x icon-dark"
-                           title="Delete this category"
-                           data-toggle="modal"
-                           data-target="#deleteModal"
-                           th:attr="data-category-id=${category.id}"></a>
-                    </th:block>
+                    <div th:replace="~{admin/fragments :: category_action}"></div>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
+
+    <div class="less-details">
+        <div th:each="cat : ${listCategories}" class="row m-1">
+            <div class="col-4">
+                <img th:src="@{${cat.imagePath}}" alt="Image error" style="width: 100px" class="img-fluid">
+            </div>
+            <div class="col-8">
+                <div>[[${cat.name}]]</div>
+                <div th:replace="~{/admin/fragments :: category_status}"></div>
+                <div th:replace="~{admin/fragments :: category_action}"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div th:if="${keyword != null}" class="text-center">
+        <span>Search result does not show category in hierarchical form</span>
+        <div th:replace="~{admin/fragments :: pagination('categories', 'categories')}"></div>
+    </div>
+    <th:block th:unless="${keyword != null}">
+        <div th:replace="~{admin/fragments :: pagination('categories', 'Top-level categories')}"></div>
+    </th:block>
 </div>
 
-<div th:if="${keyword != null}" class="text-center">
-    <span>Search result does not show category in hierarchical form</span>
-    <div th:replace="~{admin/fragments :: pagination('categories', 'categories')}"></div>
-</div>
-<th:block th:unless="${keyword != null}">
-    <div th:replace="~{admin/fragments :: pagination('categories', 'Top-level categories')}"></div>
-</th:block>
 
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
      aria-hidden="true">
