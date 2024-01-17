@@ -5,10 +5,9 @@ import com.lowagie.text.Font;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-import com.shopme.admin.controller.user.AbstractExporter;
+import com.shopme.admin.export.AbstractExporter;
 import com.shopme.admin.model.User;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.core.parameters.P;
 
 import java.awt.*;
 import java.io.IOException;
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class UserPdfExporter extends AbstractExporter {
     public void export(List<User> listUsers, HttpServletResponse response) throws IOException {
-        super.setResponseHeader(response, "application/psf", ".pdf");
+        super.setResponseHeader(response, "application/psf", ".pdf", "users_");
 
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, response.getOutputStream());
