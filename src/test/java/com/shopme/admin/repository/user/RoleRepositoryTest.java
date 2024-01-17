@@ -1,4 +1,4 @@
-package com.shopme.admin.user;
+package com.shopme.admin.repository.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import com.shopme.admin.model.Role;

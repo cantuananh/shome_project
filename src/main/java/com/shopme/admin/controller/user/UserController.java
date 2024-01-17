@@ -31,9 +31,6 @@ public class UserController {
     @RequestMapping()
     public String getAllUsers(Model model) {
         return listByPage(1, model, "firstName", "asc", null);
-//        model.addAttribute("listUsers", userService.listAll());
-//
-//        return "admin/user/users";
     }
 
     @GetMapping("/page/{pageNum}")
