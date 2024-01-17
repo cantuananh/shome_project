@@ -25,28 +25,40 @@ public class CategoryController {
 
     @RequestMapping("")
     public String listFirstPage(Model model, @Param("sortDir") String sortDir) {
-        return listByPage(1, model, sortDir);
+        return listByPage(1, model, sortDir, null);
     }
 
     @GetMapping("/page/{pageNum}")
     public String listByPage(@PathVariable(name = "pageNum") int pageNum,
                              Model model,
-                             @Param("sortDir") String sortDir) {
+                             @Param("sortDir") String sortDir,
+                             @Param("keyword") String keyword) {
         if (sortDir == null || sortDir.isEmpty()) {
             sortDir = "asc";
         }
 
         CategoryPageInfo pageInfo = new CategoryPageInfo();
-        List<Category> listCategories = categoryService.listByPage(pageInfo, pageNum, sortDir);
+        List<Category> listCategories = categoryService.listByPage(pageInfo, pageNum, sortDir, keyword);
 
         String revertSortDir = sortDir.equals("asc") ? "desc" : "asc";
         System.out.println("total: " + pageInfo.getTotalPages());
+
+
+
+        long startCount = (pageNum - 1) * CategoryService.ROOT_CATEGORIES_PER_PAGE + 1;
+        long endCount = startCount + CategoryService.ROOT_CATEGORIES_PER_PAGE - 1;
+        if (endCount > pageInfo.getTotalElements()) {
+            endCount = pageInfo.getTotalElements();
+        }
 
         model.addAttribute("totalPages", pageInfo.getTotalPages());
         model.addAttribute("totalItems", pageInfo.getTotalElements());
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("sortField", "name");
         model.addAttribute("sortDir", sortDir);
+        model.addAttribute("startCount", startCount);
+        model.addAttribute("endCount", endCount);
+        model.addAttribute("keyword", keyword);
         model.addAttribute("listCategories", listCategories);
         model.addAttribute("revertSortDir", revertSortDir);
 
