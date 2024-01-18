@@ -21,15 +21,15 @@
             <thead class="thead-dark">
             <tr class="text-center">
                 <th class="hideable-column">
-                    <th th:replace="~{/admin/fragments :: column_link('id', 'User ID', 'tag')}"></th>
+                <th th:replace="~{/admin/fragments :: column_link('/users', 'id', 'User ID', 'tag')}"></th>
                 </th>
                 <th>Photos</th>
                 <th class="hideable-column">
-                    <th th:replace="~{/admin/fragments :: column_link('email', 'E-mail', 'tag')}"></th>
+                <th th:replace="~{/admin/fragments :: column_link('/users', 'email', 'E-mail', 'tag')}"></th>
                 </th>
-                <th th:replace="~{/admin/fragments :: column_link('firstName', 'First name', 'none')}"></th>
-                <th th:replace="~{/admin/fragments :: column_link('lastName', 'Last name', 'none')}"></th>
-                <th th:replace="~{/admin/fragments :: column_link('enabled', 'Enabled', 'none')}"></th>
+                <th th:replace="~{/admin/fragments :: column_link('/users', 'firstName', 'First name', 'none')}"></th>
+                <th th:replace="~{/admin/fragments :: column_link('/users', 'lastName', 'Last name', 'none')}"></th>
+                <th th:replace="~{/admin/fragments :: column_link('/users', 'enabled', 'Enabled', 'none')}"></th>
                 <th>Roles</th>
                 <th>Action</th>
             </tr>
@@ -46,10 +46,7 @@
                 <td>[[${user.lastName}]]</td>
                 <td>[[${user.roles}]]</td>
                 <td>
-                    <a style="text-decoration: none;" th:if="${user.enabled == true}" th:href="@{'/shopme/admin/users/' + ${user.id}
-                + '/enabled/false'}" class="fas fa-check-circle fa-2x icon-green"></a>
-                    <a style="text-decoration: none;" th:if="${user.enabled == false}" th:href="@{'/shopme/admin/users/' + ${user.id}
-                + '/enabled/true'}" class="fas fa-check-circle fa-2x icon-dark"></a>
+                    <div th:replace="~{/admin/fragments :: status(${user.enabled}, ${user.id}, 'user', 'users')}"></div>
                 </td>
                 <td>
                     <a class="fas fa-edit fa-2x icon-green" title="Update this user"
@@ -75,18 +72,17 @@
         </div>
         <div class="col-8">
             <div class="mt-2">
-                <a style="text-decoration: none;" th:if="${user.enabled == true}" th:href="@{'/shopme/admin/users/' + ${user.id}
-                + '/enabled/false'}" class="fas fa-check-circle fa-2x icon-green"></a>
-                <a style="text-decoration: none;" th:if="${user.enabled == false}" th:href="@{'/shopme/admin/users/' + ${user.id}
-                + '/enabled/true'}" class="fas fa-check-circle fa-2x icon-dark"></a>
+                <div th:replace="~{/admin/fragments :: status(${user.enabled}, ${user.id}, 'user', 'users')}"></div>
                 &nbsp;
-                <a class="fas fa-edit fa-2x icon-green" title="Update this user"
-                   th:href="@{'/shopme/admin/users/edit/' + ${user.id}}"></a>
-                &nbsp;
-                <button type="button" class="btn delete-user" th:data-user-id="${user.id}"
-                        data-toggle="modal" data-target="#deleteUserModal">
-                    <i class="fas fa-trash fa-2x icon-dark" style="color: red"></i>
-                </button>
+                <div>
+                    <a class="fas fa-edit fa-2x icon-green" title="Update this user"
+                       th:href="@{'/shopme/admin/users/edit/' + ${user.id}}"></a>
+                    &nbsp;
+                    <button type="button" class="btn delete-user" th:data-user-id="${user.id}"
+                            data-toggle="modal" data-target="#deleteUserModal">
+                        <i class="fas fa-trash fa-2x icon-dark" style="color: red"></i>
+                    </button>
+                </div>
             </div>
             <div>[[${user.fullName}]]</div>
             <div>[[${user.roles}]]</div>

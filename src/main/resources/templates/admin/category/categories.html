@@ -28,12 +28,7 @@
             <tr class="text-center">
                 <th>Category ID</th>
                 <th>Category Image</th>
-                <th>
-                    <a class="text-white"
-                       th:href="@{'/shopme/admin/categories/page/' + ${currentPage} + '?sortDir=' + ${revertSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Category
-                        Name</a>
-                    <span th:class="${revertSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-                </th>
+                <th th:replace="~{/admin/fragments :: column_link('/categories', 'name', 'Category Name', 'none')}"></th>
                 <th>Category Alias</th>
                 <th>Enabled</th>
                 <th>Action</th>
@@ -48,7 +43,7 @@
                 <td>[[${category.name}]]</td>
                 <td>[[${category.alias}]]</td>
                 <td>
-                    <div th:replace="~{/admin/fragments :: category_status}"></div>
+                    <div th:replace="~{/admin/fragments :: status(${category.enabled}, ${category.id}, 'category', 'categories')}"></div>
                 </td>
                 <td>
                     <div th:replace="~{admin/fragments :: category_action}"></div>
@@ -65,8 +60,8 @@
             </div>
             <div class="col-8">
                 <div>[[${cat.name}]]</div>
-                <div th:replace="~{/admin/fragments :: category_status}"></div>
-                <div th:replace="~{admin/fragments :: category_action}"></div>
+                <div th:replace="~{/admin/fragments :: status(${cat.enabled}, ${cat.id}, 'category', 'categories')}"></div>
+                <div th:replace="~{admin/fragments :: edit('Category', 'categories', ${cat.id})}"></div>
             </div>
         </div>
     </div>
