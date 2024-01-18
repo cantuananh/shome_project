@@ -5,7 +5,7 @@
 <body>
 <div class="container-fluid">
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-        <a href="" class="navbar-brand" th:href="@{/static}">
+        <a href="" class="navbar-brand" th:href="@{/shopme/admin/home}">
             <img th:src="@{/images/ShopmeAdminSmall.png}" alt="Image error">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavbar">
@@ -46,10 +46,17 @@
                 <li class="nav-item">
                     <a th:href="@{/shopme/admin/settings}" class="nav-link">Settings</a>
                 </li>
+                <li>
+                    <span class="fas fa-user fa-2x icon-silver"></span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" sec:authentication="principal.fullName"></a>
+                </li>
             </ul>
         </div>
     </nav>
 </div>
+
 <div>
     <h2 class="text-center">User manager | [[${pageTitle}]]</h2>
     <button class="btn btn-warning" style="margin-bottom: 1rem;">
