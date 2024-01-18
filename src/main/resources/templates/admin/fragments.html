@@ -5,8 +5,9 @@
     <title>Fragment</title>
 </head>
 <body>
-<th th:fragment="column_link(fieldName, columnLabel, removeTag)" th:remove="${removeTag}">
-    <a th:href="@{'/shopme/admin/users/page/' + ${currentPage} + '?sortField=' + ${fieldName} +'&sortDir=' + ${sortField != fieldName ? sortDir : revertSortDir}
+
+<th th:fragment="column_link(moduleURL, fieldName, columnLabel, removeTag)" th:remove="${removeTag}">
+    <a style="color: white;text-decoration: none;" th:href="@{'/shopme/admin'+ ${moduleURL} +'/page/' + ${currentPage} + '?sortField=' + ${fieldName} +'&sortDir=' + ${sortField != fieldName ? sortDir : revertSortDir}
                        + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${columnLabel}]]</a>
     <span th:if="${sortField == fieldName}"
           th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
@@ -153,17 +154,17 @@
 </div>
 
 
-<div th:fragment="category_status">
-    <a th:if="${category.enabled == true}"
-       th:href="@{'/shopme/admin/categories/' + ${category.id} + '/enabled/false'}"
+<div th:fragment="status(enabled, id, entityName, entityURL)">
+    <a th:if="${enabled == true}"
+       th:href="@{'/shopme/admin/'+ ${entityURL} + '/' + ${id} + '/enabled/false'}"
        class="fas fa-2x fa-check-circle icon-green" style="text-decoration: none;"
-       title="Disabled this category"
+       th:title="'Disabled this ' + ${entityName}"
     ></a>
 
-    <a th:if="${category.enabled == false}"
-       th:href="@{'/shopme/admin/categories/' + ${category.id} + '/enabled/true'}"
+    <a th:if="${enabled == false}"
+       th:href="@{'/shopme/admin/'+ ${entityURL} + '/' + ${id} + '/enabled/true'}"
        class="fas fa-2x fa-check-circle icon-dark" style="text-decoration: none;"
-       title="Enabled this category"
+       th:title="'Enabled this ' + ${entityName}"
     ></a>
 </div>
 
@@ -180,6 +181,9 @@
            th:attr="data-category-id=${category.id}"></a>
     </th:block>
 </div>
+
+
+
 
 
 </body>
