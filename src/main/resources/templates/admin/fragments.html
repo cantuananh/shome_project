@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Fragment</title>
-</head>
-<body>
-
 <th th:fragment="column_link(moduleURL, fieldName, columnLabel, removeTag)" th:remove="${removeTag}">
     <a style="color: white;text-decoration: none;" th:href="@{'/shopme/admin'+ ${moduleURL} +'/page/' + ${currentPage} + '?sortField=' + ${fieldName} +'&sortDir=' + ${sortField != fieldName ? sortDir : revertSortDir}
                        + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${columnLabel}]]</a>
@@ -17,57 +9,8 @@
 <a th:fragment="page_link(moduleURL, pageNum, label)"
    class="page-link"
    th:href="@{'/shopme/admin/' + ${moduleURL} +'/page/' + ${pageNum} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
-    [[${label}]]</a>
-</li>
-
-
-<div class="container-fluid" th:fragment="menu">
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-        <a href="" class="navbar-brand" th:href="@{/shopme/admin/home}">
-            <img th:src="@{/images/ShopmeAdminSmall.png}" alt="Image error">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="topNavbar">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/users}" class="nav-link">Users</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/categories}" class="nav-link">Categories</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/brands}" class="nav-link">Brands</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/products}" class="nav-link">Product</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/customers}" class="nav-link">Customers</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/shipping}" class="nav-link">Shipping</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/orders}" class="nav-link">Orders</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/reports}" class="nav-link">Reports</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/articles}" class="nav-link">Articles</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/menus}" class="nav-link">Menus</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/settings}" class="nav-link">Settings</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</div>
+    [[${label}]]
+</a>
 
 
 <div th:fragment="pagination(moduleURL, entityName)" th:remove="tag">
@@ -181,9 +124,6 @@
            th:attr="data-category-id=${category.id}"></a>
     </th:block>
 </div>
-
-
-
 
 
 </body>

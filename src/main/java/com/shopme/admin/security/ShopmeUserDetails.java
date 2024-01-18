@@ -61,4 +61,8 @@ public class ShopmeUserDetails implements UserDetails {
     public boolean isEnabled() {
         return user.getEnabled();
     }
+
+    public String getFullName(){
+        return this.user.getFirstName() + this.user.getLastName();
+    }
 }
