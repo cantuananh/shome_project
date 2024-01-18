@@ -49,8 +49,11 @@
                 <li>
                     <span class="fas fa-user fa-2x icon-silver"></span>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" sec:authentication="principal.fullName"></a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" sec:authentication="principal.fullName"></a>
+                    <div class="dropdown-menu">
+                        <a href="" class="dropdown-item">Logout</a>
+                    </div>
                 </li>
             </ul>
         </div>
