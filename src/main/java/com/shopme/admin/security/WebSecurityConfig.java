@@ -44,7 +44,10 @@ public class WebSecurityConfig {
                         .usernameParameter("email")
                         .defaultSuccessUrl("/shopme/admin/home")
                         .permitAll()
-                ).logout(logout -> logout.permitAll());
+                ).logout(logout -> logout.permitAll())
+                        .rememberMe(rem -> rem
+                                .key(".......")
+                                .tokenValiditySeconds(7* 24 * 60* 60));
 
         http.headers(headers -> headers.frameOptions(f -> f.sameOrigin()));
 
