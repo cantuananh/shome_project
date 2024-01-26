@@ -80,7 +80,9 @@
                     <a class="fas fa-edit fa-2x icon-green" title="Update this user"
                        th:href="@{'/shopme/admin/users/edit/' + ${user.id}}"></a>
                     &nbsp;
-                    <button type="button" class="btn delete-user" th:data-user-id="${user.id}"
+                    <button type="button"
+                            class="btn delete-user"
+                            th:data-user-id="${user.id}"
                             data-toggle="modal" data-target="#deleteUserModal">
                         <i class="fas fa-trash fa-2x icon-dark" style="color: red"></i>
                     </button>
@@ -112,7 +114,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <!-- Thêm input hidden để lưu trữ userId -->
                 <input type="hidden" id="modalUserId"/>
                 <button type="button" class="btn btn-primary" id="confirmDelete">Yes</button>
             </div>
@@ -120,9 +121,8 @@
     </div>
 </div>
 
-<div class="text-center">
-    <p>Shopme Control Panel - Copyright &copy; Shopme</p>
-</div>
+<div th:replace="~{admin/fragments :: page_footer}"></div>
+
 </body>
 <script type="text/javascript">
     $(document).ready(function () {

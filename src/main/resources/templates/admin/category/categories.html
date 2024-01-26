@@ -46,7 +46,19 @@
                     <div th:replace="~{/admin/fragments :: status(${category.enabled}, ${category.id}, 'category', 'categories')}"></div>
                 </td>
                 <td>
-                    <div th:replace="~{admin/fragments :: category_action}"></div>
+                    <div>
+                        <a th:href="@{'/shopme/admin/categories/edit/' + ${category.id}}"
+                           class="fas fa-edit fa-2x icon-green"
+                           title="Update this category"></a>
+                        <th:block th:if="${category.hasChildren == false}">
+                            <a class="fas fa-trash fa-2x"
+                               style="color: red;"
+                               title="Delete this category"
+                               data-toggle="modal"
+                               data-target="#deleteModal"
+                               th:attr="data-category-id=${category.id}"></a>
+                        </th:block>
+                    </div>
                 </td>
             </tr>
             </tbody>
@@ -61,7 +73,19 @@
             <div class="col-8">
                 <div>[[${cat.name}]]</div>
                 <div th:replace="~{/admin/fragments :: status(${cat.enabled}, ${cat.id}, 'category', 'categories')}"></div>
-                <div th:replace="~{admin/fragments :: edit('Category', 'categories', ${cat.id})}"></div>
+                <div>
+                    <a th:href="@{'/shopme/admin/categories/edit/' + ${cat.id}}"
+                       class="fas fa-edit fa-2x icon-green"
+                       title="Update this category"></a>
+                    <th:block th:if="${cat.hasChildren == false}">
+                        <a class="fas fa-trash fa-2x"
+                           style="color: red;"
+                           title="Delete this category"
+                           data-toggle="modal"
+                           data-target="#deleteModal"
+                           th:attr="data-category-id=${cat.id}"></a>
+                    </th:block>
+                </div>
             </div>
         </div>
     </div>
@@ -76,6 +100,7 @@
     </th:block>
 </div>
 
+<div th:replace="~{admin/fragments :: page_footer}"></div>
 
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
      aria-hidden="true">
@@ -87,7 +112,6 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <input type="hidden" id="csrfToken" th:value="${_csrf.token}"/>
-
             </div>
             <div class="modal-body">
                 You sure delete?
@@ -100,9 +124,6 @@
         </div>
     </div>
 </div>
-
-
-<head th:replace="~{admin/fragments :: page_footer}"></head>
 
 </body>
 <script type="text/javascript">
