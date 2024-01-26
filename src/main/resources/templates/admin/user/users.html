@@ -2,62 +2,8 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head th:replace="~{admin/fragments :: page_head}"></head>
 <body>
-<div class="container-fluid">
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-        <a href="" class="navbar-brand" th:href="@{/shopme/admin/home}">
-            <img th:src="@{/images/ShopmeAdminSmall.png}" alt="Image error">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="topNavbar">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/users}" class="nav-link">Users</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/categories}" class="nav-link">Categories</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/brands}" class="nav-link">Brands</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/products}" class="nav-link">Product</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/customers}" class="nav-link">Customers</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/shipping}" class="nav-link">Shipping</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/orders}" class="nav-link">Orders</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/reports}" class="nav-link">Reports</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/articles}" class="nav-link">Articles</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/menus}" class="nav-link">Menus</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/shopme/admin/settings}" class="nav-link">Settings</a>
-                </li>
-                <li>
-                    <span class="fas fa-user fa-2x icon-silver"></span>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" sec:authentication="principal.fullName"></a>
-                    <div class="dropdown-menu">
-                        <a href="" class="dropdown-item">Logout</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</div>
+
+<div th:replace="~{admin/navigation :: menu}"></div>
 
 <div>
     <div>
@@ -134,7 +80,9 @@
                     <a class="fas fa-edit fa-2x icon-green" title="Update this user"
                        th:href="@{'/shopme/admin/users/edit/' + ${user.id}}"></a>
                     &nbsp;
-                    <button type="button" class="btn delete-user" th:data-user-id="${user.id}"
+                    <button type="button"
+                            class="btn delete-user"
+                            th:data-user-id="${user.id}"
                             data-toggle="modal" data-target="#deleteUserModal">
                         <i class="fas fa-trash fa-2x icon-dark" style="color: red"></i>
                     </button>
@@ -166,7 +114,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <!-- Thêm input hidden để lưu trữ userId -->
                 <input type="hidden" id="modalUserId"/>
                 <button type="button" class="btn btn-primary" id="confirmDelete">Yes</button>
             </div>
@@ -174,9 +121,8 @@
     </div>
 </div>
 
-<div class="text-center">
-    <p>Shopme Control Panel - Copyright &copy; Shopme</p>
-</div>
+<div th:replace="~{admin/fragments :: page_footer}"></div>
+
 </body>
 <script type="text/javascript">
     $(document).ready(function () {
