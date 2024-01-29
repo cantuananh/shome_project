@@ -125,7 +125,6 @@
 <script type="text/javascript">
    $(document).ready(function () {
        $('#buttonCancelCreateUser').on('click', function () {
-           console.log(123)
            window.location = "[[@{/shopme/admin/users}]]";
        })
 
@@ -183,11 +182,11 @@
    }
 
 
-   function showModalDialog(title, message) {
-       $("#modalTitle").text(title);
-       $("#modalBody").text(message);
-       $("#modalDialog").modal();
-   }
+   // function showModalDialog(title, message) {
+   //     $("#modalTitle").text(title);
+   //     $("#modalBody").text(message);
+   //     $("#modalDialog").modal();
+   // }
 
 </script>
 <script th:src="@{/js/common_form.js}"></script>

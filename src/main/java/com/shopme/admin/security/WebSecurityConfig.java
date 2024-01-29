@@ -35,8 +35,17 @@ public class WebSecurityConfig {
         http.authenticationProvider(authenticationProvider());
         http.authorizeHttpRequests(auth -> auth
                         .requestMatchers("/shopme/admin/home").hasAnyAuthority("Admin", "Salesperson", "Editor", "Shipper" , "Assistant")
-                        .requestMatchers("/shopme/admin/users/**").hasAnyAuthority("Admin")
-                        .requestMatchers("/shopme/admin/categories/**").hasAnyAuthority("Admin")
+                        .requestMatchers("/shopme/admin/users/**").hasAuthority("Admin")
+                        .requestMatchers("/shopme/admin/categories/**").hasAnyAuthority("Admin", "Editor")
+                        .requestMatchers("/shopme/admin/brands/**").hasAnyAuthority("Admin", "Editor")
+                        .requestMatchers("/shopme/admin/products/**").hasAnyAuthority("Admin", "Editor", "Salesperson", "Shipper")
+                        .requestMatchers("/shopme/admin/customers/**").hasAnyAuthority("Admin", "Salesperson")
+                        .requestMatchers("/shopme/admin/shipping/**").hasAnyAuthority("Admin", "Salesperson")
+                        .requestMatchers("/shopme/admin/orders/**").hasAnyAuthority("Admin", "Salesperson", "Shipper")
+                        .requestMatchers("/shopme/admin/reports/**").hasAnyAuthority("Admin", "Salesperson")
+                        .requestMatchers("/shopme/admin/articles/**").hasAnyAuthority("Admin", "Editor")
+                        .requestMatchers("/shopme/admin/menus/**").hasAnyAuthority("Admin", "Editor")
+                        .requestMatchers("/shopme/admin/settings/**").hasAnyAuthority("Admin")
                         .anyRequest()
                         .authenticated())
                 .formLogin(form -> form
