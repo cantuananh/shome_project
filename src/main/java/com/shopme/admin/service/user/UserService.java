@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -27,11 +28,15 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    public User getUserByEmail(String email) {
+        return userRepository.getUserByEmail(email);
+    }
+
     public List<User> listAll() {
         return (List<User>) userRepository.findAll(Sort.by("firstName").ascending());
     }
 
-    public Page<User> listByPage(int pageNum, String sortField, String sortDir, String keyword){
+    public Page<User> listByPage(int pageNum, String sortField, String sortDir, String keyword) {
         Sort sort = Sort.by(sortField);
         sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
         Pageable pageable = PageRequest.of(pageNum - 1, USER_PER_PAGE, sort);
@@ -91,21 +96,39 @@ public class UserService {
         return true;
     }
 
+    public User updateAccountInformation(User userInform) {
+        Optional<User> optionalUser = userRepository.findById(userInform.getId());
 
+        User userInDB = optionalUser.get();
 
-    public User get(Integer id) throws UserNotFoundException {
+        if (!userInform.getPassword().isEmpty()) {
+            userInDB.setPassword(userInform.getPassword());
+            encodePassword(userInDB);
+        }
+
+        if (userInform.getPhotos() != null) {
+            userInDB.setPhotos(userInform.getPhotos());
+        }
+
+        userInDB.setFirstName(userInform.getFirstName());
+        userInDB.setLastName(userInform.getLastName());
+
+        return userRepository.save(userInDB);
+    }
+
+    public User get(Integer id) throws com.shopme.admin.service.UserNotFoundException {
         try {
             return userRepository.findById(id).get();
         } catch (NoSuchElementException ex) {
-            throw new UserNotFoundException("Could not found user ID :" + id);
+            throw new com.shopme.admin.service.UserNotFoundException("Could not found user ID :" + id);
         }
     }
 
-    public void delete(Integer id) throws UserNotFoundException {
+    public void delete(Integer id) throws com.shopme.admin.service.UserNotFoundException {
         Long countById = userRepository.countById(id);
 
-        if (countById == null || countById ==0) {
-            throw new UserNotFoundException("Could not found user ID: " + id);
+        if (countById == null || countById == 0) {
+            throw new com.shopme.admin.service.UserNotFoundException("Could not found user ID: " + id);
         }
 
         userRepository.deleteById(id);
