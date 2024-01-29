@@ -2,7 +2,11 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head th:replace="~{admin/fragments :: page_head}"></head>
 <body>
-<div th:replace="~{admin/navigation :: menu}"></div>
+<div class="container-fluid">
+    <div th:replace="~{admin/navigation :: lougout_form}"></div>
+
+    <nav th:replace="~{admin/navigation :: menu}"></nav>
+</div>
 
 <div>
     <h2 class="text-center mb-3">Category manager | [[${pageTitle}]]</h2>
@@ -129,4 +133,5 @@
     }
 </script>
 <!--<script th:src="@{/js/common_form.js}"></script>-->
+<script th:src="@{/js/logout.js}"></script>
 </html>
