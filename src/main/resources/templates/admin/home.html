@@ -11,7 +11,10 @@
 </div>
 
 <div class="text-center">
-    <h1>Welcome to Shopme!</h1>
+    <h1>Shopme home page!</h1>
+    <a th:href="@{/shopme/admin/account}"
+       sec:authentication="principal.fullName"></a>
+    <span sec:authentication="principal.authorities"></span>
 </div>
 
 <div th:replace="~{admin/fragments :: page_footer}"></div>
